@@ -552,5 +552,44 @@
             }
         });
     </script>
+    <script>
+    function openModal(modalId) {
+        const modal = document.getElementById(modalId);
+        modal.classList.remove('hidden');
+
+        // 팝업 떴을 때 배경 스크롤 막기
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(modalId) {
+        const modal = document.getElementById(modalId);
+        modal.classList.add('hidden');
+
+        // 팝업 닫으면 배경 스크롤 다시 허용
+        document.body.style.overflow = 'auto';
+    }
+
+    // 키보드 접근성: ESC 키 누르면 열린 모달 닫기
+    document.addEventListener('keydown', function(event) {
+        if (event.key === "Escape") {
+            ['modal-buildup', 'modal-jumpup'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el && !el.classList.contains('hidden')) {
+                    closeModal(id);
+                }
+            });
+        }
+    });
+
+    // 🔽 여기부터 추가
+    // 페이지 처음 열릴 때 항상 맨 위에서 시작
+    window.addEventListener('load', function () {
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual'; // 브라우저의 자동 복원 끄기
+        }
+        window.scrollTo(0, 0); // 강제로 맨 위로 이동
+    });
+    // 🔼 여기까지 추가
+</script>
 </body>
 </html>
