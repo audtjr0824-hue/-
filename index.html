@@ -151,9 +151,7 @@
                         <div class="text-left">
                             <h3 class="text-xl md:text-2xl font-bold text-white mb-1">상담 시간 절약 꿀팁!</h3>
                             <p class="text-gray-300 text-sm md:text-base">
-                                <strong class="text-yellow-300 border-b border-yellow-300">고용24 회원가입</strong>과<br class="md:hidden">
-                                <strong class="text-yellow-300 border-b border-yellow-300">잡케어 직업 설계서</strong>를 미리 만들어 오면<br>
-                                상담이 훨씬 빨라집니다.
+                                <strong class="text-yellow-300 border-b border-yellow-300">고용24 회원가입</strong> 미리 하고 오시면<br class="md:hidden"> 상담이 훨씬 빨라집니다.
                             </p>
                         </div>
                     </div>
@@ -166,6 +164,213 @@
                 </div>
             </a>
         </div>
+
+        <!-- 고용24 & 잡케어 준비 가이드 -->
+        <section class="mt-4 mb-16 bg-white rounded-3xl p-7 md:p-10 shadow-xl border border-blue-100">
+            <h2 class="font-impact text-3xl text-gray-900 mb-3 prevent-select">
+                고용24 · 잡케어 먼저 준비하면 더 편해요
+            </h2>
+            <p class="text-sm md:text-base text-gray-600 mb-6 prevent-select">
+                재학생 맞춤형 고용서비스 신청 전에
+                <span class="font-semibold text-blue-700">고용24 회원가입 · 실명인증 · 잡케어 직업 설계서</span>까지 만들어두면
+                상담과 신청이 훨씬 빨라집니다.
+            </p>
+
+            <!-- 1. 고용24 회원가입 / 로그인 -->
+            <div class="border border-gray-200 rounded-2xl mb-4 overflow-hidden">
+                <button
+                    type="button"
+                    class="w-full flex items-center justify-between px-4 md:px-5 py-3 md:py-4 bg-gray-50 hover:bg-gray-100 transition group"
+                    onclick="toggleGuide('guide-join')"
+                >
+                    <div class="flex items-center gap-2 text-left">
+                        <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-blue-600 text-white text-sm font-bold">
+                            1
+                        </span>
+                        <span class="font-bold text-sm md:text-base text-gray-900">
+                            고용24 회원가입 · 실명인증 · 로그인 준비
+                        </span>
+                    </div>
+                    <svg id="icon-guide-join"
+                         class="w-5 h-5 text-gray-400 transform transition-transform duration-200"
+                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
+                <div id="guide-join" class="px-4 md:px-6 pb-5 pt-3 text-sm text-gray-700 hidden">
+                    <!-- ◈ 고용24란? -->
+                    <div class="mb-4 bg-blue-50 border border-blue-100 rounded-xl p-4">
+                        <p class="text-xs md:text-sm text-gray-700">
+                            <span class="font-bold text-blue-800">◈ 고용24란?</span><br>
+                            모든 온라인 고용서비스를 한 곳에서 신청하고 결과를 확인할 수 있는
+                            <span class="font-semibold">통합 포털</span>입니다. 재학생 맞춤형 고용서비스, 잡케어, 직업심리검사 등도
+                            모두 고용24에서 이용합니다.
+                        </p>
+                    </div>
+
+                    <!-- STEP 카드형 구성 -->
+                    <ol class="space-y-3">
+                        <li>
+                            <div class="flex items-start gap-3 bg-gray-50 rounded-xl p-3 border border-gray-100">
+                                <div class="mt-0.5">
+                                    <span class="inline-flex items-center justify-center px-3 py-1 rounded-full bg-blue-600 text-white text-[11px] font-bold whitespace-nowrap">
+                                        STEP 1
+                                    </span>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-gray-900 text-sm mb-1">고용24 회원가입</p>
+                                    <p class="text-xs md:text-sm text-gray-700">
+                                        고용24 접속 → 상단 <strong>[회원가입]</strong> 클릭 →
+                                        <strong>[개인회원 가입] · [14세 이상 개인회원]</strong> 선택 →  
+                                        <strong>본인확인 방법(간편인증, 금융인증서, 공동인증서, 아이핀 등)</strong> 선택 후 안내에 따라
+                                        이름, 생년월일, <strong>휴대전화번호, 이메일</strong> 등을 입력하고 가입을 완료합니다.
+                                    </p>
+                                    <p class="text-xs text-red-600 mt-2">
+                                        ※ 실제 사용하는 <span class="font-semibold">휴대전화번호와 이메일</span>을 꼭 입력하세요.  
+                                        재학생 맞춤형 고용서비스 신청 안내, 증빙 보완 요청, 수당 지급 안내가 이 연락처로 발송되며,  
+                                        정보가 없거나 잘못 입력되면 신청·지급 과정에 어려움이 생길 수 있습니다.
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="flex items-start gap-3 bg-gray-50 rounded-xl p-3 border border-gray-100">
+                                <div class="mt-0.5">
+                                    <span class="inline-flex items-center justify-center px-3 py-1 rounded-full bg-blue-500 text-white text-[11px] font-bold whitespace-nowrap">
+                                        STEP 2
+                                    </span>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-gray-900 text-sm mb-1">실명인증 (최초 1회)</p>
+                                    <p class="text-xs md:text-sm text-gray-700">
+                                        회원가입 후 <strong>첫 로그인</strong>을 하면 화면 상단 또는 안내창에서
+                                        <strong>[실명인증]</strong>을 진행하라는 메시지가 나타납니다.  
+                                        안내에 따라 주민등록번호와 성명을 입력해 실명확인을 완료한 뒤,
+                                        <span class="font-semibold">한 번 더 로그인</span>하면 이후부터는 별도 실명인증 없이 바로 서비스를 이용할 수 있습니다.
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="flex items-start gap-3 bg-gray-50 rounded-xl p-3 border border-gray-100">
+                                <div class="mt-0.5">
+                                    <span class="inline-flex items-center justify-center px-3 py-1 rounded-full bg-blue-400 text-white text-[11px] font-bold whitespace-nowrap">
+                                        STEP 3
+                                    </span>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-gray-900 text-sm mb-1">공동·간편 인증서로 로그인 준비</p>
+                                    <p class="text-xs md:text-sm text-gray-700 mb-1">
+                                        재학생 맞춤형 고용서비스 신청과 각종 민원 서비스 이용을 위해서는
+                                        <span class="font-semibold text-blue-700">간편인증(카카오, 네이버 등)·금융인증서·공동인증서</span> 중
+                                        하나를 선택해 로그인해주시면 됩니다.
+                                    </p>
+                                    <p class="text-[11px] text-gray-500">
+                                        · 공동인증서를 사용할 경우 <strong>[마이페이지] → [회원정보관리] → [(공동)인증서 등록]</strong>에서 한 번만 등록해 두면,  
+                                        이후에는 공동인증서로 바로 로그인할 수 있습니다.
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- 2. 잡케어 직업 설계서 -->
+            <div class="border border-gray-200 rounded-2xl overflow-hidden">
+                <button
+                    type="button"
+                    class="w-full flex items-center justify-between px-4 md:px-5 py-3 md:py-4 bg-gray-50 hover:bg-gray-100 transition group"
+                    onclick="toggleGuide('guide-jobcare')"
+                >
+                    <div class="flex items-center gap-2 text-left">
+                        <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-emerald-600 text-white text-sm font-bold">
+                            2
+                        </span>
+                        <span class="font-bold text-sm md:text-base text-gray-900">
+                            잡케어 직업 설계서 만들기 (관심사항으로)
+                        </span>
+                    </div>
+                    <svg id="icon-guide-jobcare"
+                         class="w-5 h-5 text-gray-400 transform transition-transform duration-200"
+                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
+                <div id="guide-jobcare" class="px-4 md:px-6 pb-5 pt-3 text-sm text-gray-700 hidden">
+                    <p class="text-xs md:text-sm text-gray-700 mb-3">
+                        재학생 맞춤형 고용서비스에서 요구하는 <strong>직업 설계서</strong>는
+                        잡케어의 <strong>「관심사항으로 만들기」</strong> 기능으로 간단히 작성할 수 있습니다.
+                    </p>
+
+                    <!-- STEP 카드형 구성 (잡케어) -->
+                    <ol class="space-y-3">
+                        <li>
+                            <div class="flex items-start gap-3 bg-emerald-50 rounded-xl p-3 border border-emerald-100">
+                                <div class="mt-0.5">
+                                    <span class="inline-flex items-center justify-center px-3 py-1 rounded-full bg-emerald-600 text-white text-[11px] font-bold whitespace-nowrap">
+                                        STEP 1
+                                    </span>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-gray-900 text-sm mb-1">잡케어 메뉴 찾기</p>
+                                    <p class="text-xs md:text-sm text-gray-700">
+                                        <strong>PC/모바일:</strong> 고용24 로그인 후 메인 화면의 검색창 아래  
+                                        <strong>[취업준비]</strong> 영역에서 <strong>[잡케어]</strong> 아이콘을 클릭합니다.
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="flex items-start gap-3 bg-emerald-50 rounded-xl p-3 border border-emerald-100">
+                                <div class="mt-0.5">
+                                    <span class="inline-flex items-center justify-center px-3 py-1 rounded-full bg-emerald-500 text-white text-[11px] font-bold whitespace-nowrap">
+                                        STEP 2
+                                    </span>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-gray-900 text-sm mb-1">관심사항으로 직업 설계서 만들기</p>
+                                    <p class="text-xs md:text-sm text-gray-700">
+                                        잡케어 메인에서 <strong>[직업 설계서 만들기]</strong> 버튼을 누른 뒤,
+                                        방법 선택 화면에서 <strong>[관심사항으로 만들기]</strong>를 선택합니다.  
+                                        전공, 관심 있는 직무, 따고 싶은 자격증, 하고 싶은 일 등을
+                                        <strong>키워드 형태로 3~5개 이상</strong> 입력하면  
+                                        AI가 관련 직업을 분석해 <strong>관심사항으로 만든 직업 설계서</strong>를 자동으로 만들어 줍니다.
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="flex items-start gap-3 bg-emerald-50 rounded-xl p-3 border border-emerald-100">
+                                <div class="mt-0.5">
+                                    <span class="inline-flex items-center justify-center px-3 py-1 rounded-full bg-emerald-400 text-white text-[11px] font-bold whitespace-nowrap">
+                                        STEP 3
+                                    </span>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-gray-900 text-sm mb-1">직업 설계서 저장 · 확인</p>
+                                    <p class="text-xs md:text-sm text-gray-700">
+                                        생성된 직업 설계서는 <strong>[나의 직업 설계서]</strong> 메뉴에서 다시 확인할 수 있습니다.  
+                                        직업 이름, 필요한 역량, 관련 자격증, 연관 직무 정보가 함께 정리되므로,
+                                        재학생 맞춤형 고용서비스 상담 시 <strong>진로 탐색 자료</strong>로 활용하기 좋습니다.
+                                    </p>
+                                    <p class="text-[11px] text-gray-600 mt-1">
+                                        · 최소 1개의 직업 설계서만 만들어도 신청에는 문제가 없지만,  
+                                        관심 직업이 2~3개라면 각각 설계서를 만들어 두면 상담이 더 풍부해집니다.
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </section>
 
         <!-- TRACK CARDS -->
         <div class="text-center mb-10">
@@ -283,7 +488,7 @@
 
         </div>
 
-        <!-- HOW TO APPLY (학교 포털 예약) -->
+        <!-- HOW TO APPLY -->
         <section id="apply" class="bg-white rounded-3xl p-8 md:p-12 shadow-xl border border-gray-100 text-center">
             <h2 class="font-impact text-3xl text-gray-900 mb-8 prevent-select">학교 포털에서 바로 예약하기</h2>
             
@@ -341,138 +546,6 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H7m6-4v8" />
                     </svg>
                 </a>
-            </div>
-        </section>
-
-        <!-- 고용24 & 잡케어 사용 가이드 -->
-        <section class="mt-12 max-w-4xl mx-auto">
-            <div class="bg-white rounded-3xl shadow-xl border border-blue-100 p-6 md:p-8">
-                <div class="flex items-center mb-4">
-                    <span class="text-2xl mr-2">📌</span>
-                    <h2 class="font-impact text-2xl md:text-3xl text-gray-900">고용24 · 잡케어 준비 가이드</h2>
-                </div>
-                <p class="text-sm text-gray-600 mb-6">
-                    재학생 맞춤형 고용서비스를 편하게 이용하려면,
-                    <span class="font-bold">고용24 회원가입 → 실명인증 → 공동·간편인증 로그인 → 잡케어 ‘관심사항으로 직업 설계서 만들기’</span> 순서로 미리 준비해 두면 좋습니다.
-                </p>
-
-                <div class="space-y-3">
-                    <!-- STEP 1: 회원가입 -->
-                    <div class="border border-slate-200 rounded-2xl overflow-hidden">
-                        <button type="button"
-                                class="guide-toggle flex w-full items-center justify-between px-4 py-3 text-left text-sm font-bold text-gray-800 bg-slate-50 hover:bg-slate-100"
-                                data-target="guide-step1">
-                            <div class="flex items-center">
-                                <span class="mr-2 text-blue-600 text-xs font-black bg-blue-50 px-2 py-1 rounded-full">STEP 1</span>
-                                <span>고용24 회원가입</span>
-                            </div>
-                            <span class="guide-arrow text-xs text-gray-500">▼</span>
-                        </button>
-                        <div id="guide-step1" class="hidden px-4 pb-4 pt-3 text-xs text-gray-600 bg-white">
-                            <ul class="list-disc pl-5 space-y-1">
-                                <li>고용24 메인 화면에서 <strong>회원가입</strong> 클릭.</li>
-                                <li><strong>개인회원가입 → 14세 이상 개인회원</strong>을 선택합니다. :contentReference[oaicite:0]{index=0}</li>
-                                <li>
-                                    <strong>본인확인 방법</strong>을 선택하고(간편인증, 금융인증서, 공동인증서 등),
-                                    안내에 따라 본인 인증 후 기본 정보를 입력하면 가입이 완료됩니다. :contentReference[oaicite:1]{index=1}
-                                </li>
-                                <li>이미 워크넷·직업훈련 등을 이용했던 경우라도, 고용24에서는 최초 1회 회원가입 절차가 필요할 수 있습니다.</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- STEP 2: 실명인증 -->
-                    <div class="border border-slate-200 rounded-2xl overflow-hidden">
-                        <button type="button"
-                                class="guide-toggle flex w-full items-center justify-between px-4 py-3 text-left text-sm font-bold text-gray-800 bg-slate-50 hover:bg-slate-100"
-                                data-target="guide-step2">
-                            <div class="flex items-center">
-                                <span class="mr-2 text-blue-600 text-xs font-black bg-blue-50 px-2 py-1 rounded-full">STEP 2</span>
-                                <span>첫 로그인 후 실명인증</span>
-                            </div>
-                            <span class="guide-arrow text-xs text-gray-500">▼</span>
-                        </button>
-                        <div id="guide-step2" class="hidden px-4 pb-4 pt-3 text-xs text-gray-600 bg-white">
-                            <ul class="list-disc pl-5 space-y-1">
-                                <li>회원가입 후 처음 로그인하면, 상단 메뉴에서 <strong>‘실명인증’</strong>을 한 번 더 진행해야 합니다. :contentReference[oaicite:2]{index=2}</li>
-                                <li><strong>로그인 → 상단 ‘실명인증’ 클릭 → 주민등록번호·성명 입력 → ‘실명확인’ 클릭</strong> 순서로 진행하면 됩니다. :contentReference[oaicite:3]{index=3}</li>
-                                <li>실명인증은 <strong>최초 1회만</strong> 필요하며, 완료 후에는 한 번 로그아웃했다가 다시 로그인하면 정상 이용이 가능합니다.</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- STEP 3: 로그인 방식 (공동·간편인증) -->
-                    <div class="border border-slate-200 rounded-2xl overflow-hidden">
-                        <button type="button"
-                                class="guide-toggle flex w-full items-center justify-between px-4 py-3 text-left text-sm font-bold text-gray-800 bg-slate-50 hover:bg-slate-100"
-                                data-target="guide-step3">
-                            <div class="flex items-center">
-                                <span class="mr-2 text-blue-600 text-xs font-black bg-blue-50 px-2 py-1 rounded-full">STEP 3</span>
-                                <span>재맞고 이용에 맞는 로그인 방법</span>
-                            </div>
-                            <span class="guide-arrow text-xs text-gray-500">▼</span>
-                        </button>
-                        <div id="guide-step3" class="hidden px-4 pb-4 pt-3 text-xs text-gray-600 bg-white">
-                            <ul class="list-disc pl-5 space-y-1">
-                                <li>
-                                    재학생 맞춤형 고용서비스(재맞고)를 이용할 때는
-                                    <strong>공동인증서 또는 간편인증(카카오, 네이버 등 민간·금융인증서)</strong>로 로그인하는 것을 기준으로 안내합니다. :contentReference[oaicite:4]{index=4}
-                                </li>
-                                <li>
-                                    로그인 화면에서 <strong>모바일신분증, 금융인증서, 공동인증서, 간편인증</strong> 중 편한 수단을 선택해 로그인해 주세요. :contentReference[oaicite:5]{index=5}
-                                </li>
-                                <li>
-                                    <strong>아이디/비밀번호 로그인</strong>은 직업훈련 출석 확인 등 일부 모바일 서비스용으로 제한되어 있기 때문에,
-                                    재학생 맞춤형 고용서비스 이용에는 적합하지 않습니다. :contentReference[oaicite:6]{index=6}
-                                </li>
-                                <li>
-                                    공동인증서를 새로 등록해야 하는 경우, PC에서 간편인증 등으로 먼저 로그인한 뒤
-                                    <strong>[마이페이지 → 회원정보 관리 → 회원인증서 관리 → 공동인증서 등록]</strong> 메뉴에서 한 번만 등록하면 됩니다. :contentReference[oaicite:7]{index=7}
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- STEP 4: 잡케어 직업 설계서 (관심사항 기준) -->
-                    <div class="border border-slate-200 rounded-2xl overflow-hidden">
-                        <button type="button"
-                                class="guide-toggle flex w-full items-center justify-between px-4 py-3 text-left text-sm font-bold text-gray-800 bg-slate-50 hover:bg-slate-100"
-                                data-target="guide-step4">
-                            <div class="flex items-center">
-                                <span class="mr-2 text-blue-600 text-xs font-black bg-blue-50 px-2 py-1 rounded-full">STEP 4</span>
-                                <span>잡케어 ‘관심사항으로 직업 설계서 만들기’</span>
-                            </div>
-                            <span class="guide-arrow text-xs text-gray-500">▼</span>
-                        </button>
-                        <div id="guide-step4" class="hidden px-4 pb-4 pt-3 text-xs text-gray-600 bg-white">
-                            <ul class="list-disc pl-5 space-y-1">
-                                <li>고용24에 공동·간편인증으로 로그인한 뒤, 상단 또는 마이페이지에서 <strong>[잡케어]</strong> 메뉴를 클릭합니다. :contentReference[oaicite:8]{index=8}</li>
-                                <li><strong>[직업 설계서 만들기]</strong> 버튼을 누르고, <strong>[관심사항으로 직업 설계서 만들기]</strong>를 선택합니다. :contentReference[oaicite:9]{index=9}</li>
-                                <li>
-                                    전공, 관심 직업, 배우고 싶은 기술 등을 키워드나 문장으로 입력하면 AI가 관련 직업을 추천합니다.
-                                    추천 직업 중 하나를 선택하고 <strong>‘직업 설계서 만들기’</strong>를 누르면 나만의 직업 설계서가 생성됩니다. :contentReference[oaicite:10]{index=10}
-                                </li>
-                                <li>
-                                    생성된 설계서는 <strong>[나의 직업 설계서]</strong> 메뉴에서 다시 확인할 수 있고, 직무 역량·취업시장 정보·추천 일자리·훈련·자격증 정보를 함께 볼 수 있습니다. :contentReference[oaicite:11]{index=11}
-                                </li>
-                                <li>
-                                    <strong>경남대 재학생 맞춤형 고용서비스에서는</strong>
-                                    <span class="bg-yellow-100 px-1 font-bold">‘관심사항으로 만든 직업 설계서’ 1개 이상</span>을 미리 만들어 오면
-                                    상담이 훨씬 수월합니다. (필수 기준은 <strong>관심사항으로 만들기</strong>이며, 프로필 기반 설계서는 선택 사항입니다.)
-                                </li>
-                            </ul>
-                            <p class="mt-3 text-[11px] text-gray-500">
-                                * 시간이 된다면 이후에 <strong>‘프로필로 직업 설계서 만들기’</strong>도 활용해 학력·자격증·경험을 추가로 입력하면,
-                                더 정밀한 직무역량 분석과 추천 정보를 확인할 수 있습니다. (재맞고 참여 필수는 아닙니다.) :contentReference[oaicite:12]{index=12}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <p class="mt-6 text-xs text-gray-500">
-                    위 절차를 미리 완료하고 오면, 현장에서 별도의 가입·인증 절차 없이
-                    바로 빌드업/점프업 상담과 경력개발 로드맵 설계를 진행할 수 있습니다.
-                </p>
             </div>
         </section>
     </main>
@@ -542,50 +615,26 @@
                         <ul class="space-y-3">
                             <li class="flex items-start">
                                 <span class="bg-yellow-400 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold mr-3 shrink-0 mt-0.5">1</span>
-                                <div>
-                                    <strong class="text-gray-800 block">나를 이해하기</strong>
-                                    <span class="text-xs text-gray-500">
-                                        최근 재미있었던 활동, 강점, 성격 등을 정리하며 진짜 ‘나’를 돌아봅니다.
-                                    </span>
-                                </div>
+                                <div><strong class="text-gray-800 block">나를 이해하기</strong><span class="text-xs text-gray-500">최근 재미있었던 활동, 강점, 성격 등을 정리하며 진짜 ‘나’를 돌아봅니다.</span></div>
                             </li>
                             <li class="flex items-start">
                                 <span class="bg-yellow-400 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold mr-3 shrink-0 mt-0.5">2</span>
-                                <div>
-                                    <strong class="text-gray-800 block">희망 직업 정하기</strong>
-                                    <span class="text-xs text-gray-500">
-                                        관심 있는 직업을 최소 1~2개 선택해 나에게 맞는 진로 방향을 잡습니다.
-                                    </span>
-                                </div>
+                                <div><strong class="text-gray-800 block">희망 직업 정하기</strong><span class="text-xs text-gray-500">관심 있는 직업을 최소 1~2개 선택해 나에게 맞는 진로 방향을 잡습니다.</span></div>
                             </li>
                             <li class="flex items-start">
                                 <span class="bg-yellow-400 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold mr-3 shrink-0 mt-0.5">3</span>
-                                <div>
-                                    <strong class="text-gray-800 block">단기·중장기 계획 세우기</strong>
-                                    <span class="text-xs text-gray-500 block mb-1">
-                                        <strong>단기:</strong> 올해 안에 실천할 계획 (교내·외 프로그램, 직무체험 등)
-                                    </span>
-                                    <span class="text-xs text-gray-500 block">
-                                        <strong>중장기:</strong> 3~4학년 활동 계획 (자격증, 어학, 인턴 등)
-                                    </span>
-                                </div>
+                                <div><strong class="text-gray-800 block">단기·중장기 계획 세우기</strong><span class="text-xs text-gray-500 block mb-1"><strong>단기:</strong> 올해 안에 실천할 계획 (교내·외 프로그램, 직무체험 등)</span><span class="text-xs text-gray-500 block"><strong>중장기:</strong> 3~4학년 활동 계획 (자격증, 어학, 인턴 등)</span></div>
                             </li>
                             <li class="flex items-start">
                                 <span class="bg-yellow-400 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold mr-3 shrink-0 mt-0.5">4</span>
-                                <div>
-                                    <strong class="text-gray-800 block">나의 다짐 쓰기</strong>
-                                    <span class="text-xs text-gray-500">
-                                        대학 생활 동안 꼭 이루고 싶은 목표와 다짐을 작성합니다.
-                                    </span>
-                                </div>
+                                <div><strong class="text-gray-800 block">나의 다짐 쓰기</strong><span class="text-xs text-gray-500">대학 생활 동안 꼭 이루고 싶은 목표와 다짐을 작성합니다.</span></div>
                             </li>
                         </ul>
                     </div>
                     <div class="bg-yellow-50 p-4 rounded-xl text-center">
                         <span class="text-2xl block mb-2">🎓</span>
                         <p class="text-yellow-900 font-bold text-sm">
-                            완료 시 전공·관심사·목표가 한눈에 보이는<br>
-                            <span class="bg-yellow-200 px-1">'개인 경력 설계도'</span>가 완성됩니다!
+                            완료 시 전공·관심사·목표가 한눈에 보이는<br><span class="bg-yellow-200 px-1">'개인 경력 설계도'</span>가 완성됩니다!
                         </p>
                     </div>
                 </div>
@@ -658,12 +707,14 @@
                     </div>
                     <div class="bg-red-50 p-3 rounded-lg border border-red-100 flex items-start">
                          <svg class="w-5 h-5 text-red-500 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                   d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
+                             </path>
                          </svg>
                          <div class="text-xs text-red-600">
-                             <strong>중요 포인트</strong><br>
-                             - 매달 수립한 IAP 건수의 <strong>70% 이상 이행 필수!</strong><br>
-                             - 모든 활동은 <strong>IAP 승인 이후 시작한 것만 인정!</strong>
+                            <strong>중요 포인트</strong><br>
+                            - 매달 수립한 IAP 건수의 <strong>70% 이상 이행 필수!</strong><br>
+                            - 모든 활동은 <strong>IAP 승인 이후 시작한 것만 인정!</strong>
                          </div>
                     </div>
                 </div>
@@ -746,23 +797,22 @@
             }
         });
 
-        // 고용24 & 잡케어 가이드 토글 (화살표 위/아래 전환)
-        document.querySelectorAll('.guide-toggle').forEach(function(btn) {
-            btn.addEventListener('click', function() {
-                const targetId = btn.getAttribute('data-target');
-                const content = document.getElementById(targetId);
-                const arrow = btn.querySelector('.guide-arrow');
-                const isOpen = !content.classList.contains('hidden');
+        // 고용24 · 잡케어 가이드 토글 (화살표 위/아래 전환 포함)
+        function toggleGuide(id) {
+            const content = document.getElementById(id);
+            const icon = document.getElementById('icon-' + id);
+            if (!content) return;
 
-                if (isOpen) {
-                    content.classList.add('hidden');
-                    if (arrow) arrow.textContent = '▼';
-                } else {
-                    content.classList.remove('hidden');
-                    if (arrow) arrow.textContent = '▲';
-                }
-            });
-        });
+            const isHidden = content.classList.contains('hidden');
+            if (isHidden) {
+                content.classList.remove('hidden');
+                if (icon) icon.classList.add('rotate-180');
+            } else {
+                content.classList.add('hidden');
+                if (icon) icon.classList.remove('rotate-180');
+            }
+        }
     </script>
 </body>
 </html>
+
