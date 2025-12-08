@@ -58,8 +58,12 @@
             transform: translateY(-8px);
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
+        /* 마우스 클릭 시 기본 포커스 제거, 키보드(Tab) 사용 시만 강조 */
         .main-card:focus {
-            outline: 3px solid #3B82F6;
+            outline: none;
+        }
+        .main-card:focus-visible {
+            outline: 3px solid #FACC15; /* 노란 포커스 테두리 */
             outline-offset: 4px;
         }
 
@@ -124,11 +128,12 @@
 
             <!-- CTA Buttons -->
             <div class="mt-8 flex flex-col md:flex-row items-center justify-center gap-3">
-                <a href="#apply" class="prevent-select px-6 py-3 rounded-full bg-white text-blue-700 font-bold text-sm shadow-md hover:bg-blue-50 transition focus:ring-4 focus:ring-blue-300 outline-none">
+                <a href="#apply"
+                   class="prevent-select px-6 py-3 rounded-full bg-white text-blue-700 font-bold text-sm shadow-md hover:bg-blue-50 transition focus-visible:ring-4 focus-visible:ring-blue-300 outline-none">
                     학교 포털에서 상담 예약하기
                 </a>
                 <a href="https://www.work24.go.kr/" target="_blank" rel="noopener noreferrer"
-                   class="prevent-select px-6 py-3 rounded-full border border-white/60 text-white text-sm font-bold hover:bg-white/10 transition focus:ring-4 focus:ring-white/50 outline-none">
+                   class="prevent-select px-6 py-3 rounded-full border border-white/60 text-white text-sm font-bold hover:bg-white/10 transition focus-visible:ring-4 focus-visible:ring-white/50 outline-none">
                     고용24 바로가기
                 </a>
             </div>
@@ -144,7 +149,7 @@
         <!-- FAST PASS (WORK24) -->
         <div class="mb-12">
             <a href="https://www.work24.go.kr/" target="_blank" rel="noopener noreferrer"
-               class="fast-pass block p-6 md:p-8 shadow-xl hover:shadow-2xl transition transform hover:scale-[1.01] focus:ring-4 focus:ring-gray-400 outline-none prevent-select">
+               class="fast-pass block p-6 md:p-8 shadow-xl hover:shadow-2xl transition transform hover:scale-[1.01] focus-visible:ring-4 focus-visible:ring-gray-400 outline-none prevent-select">
                 <div class="flex flex-col md:flex-row items-center justify-between">
                     <div class="flex items-center mb-4 md:mb-0">
                         <div class="bg-yellow-400 text-black font-black rounded-full w-12 h-12 flex items-center justify-center text-xl mr-4 shrink-0 shadow-lg">⚡</div>
@@ -496,7 +501,7 @@
             <div class="flex flex-col md:flex-row justify-center gap-4 text-left max-w-5xl mx-auto">
                 <!-- 01 : 완전 흰색 · 가장 기본 단계 -->
                 <a href="https://portal.kyungnam.ac.kr/main.do" target="_blank" rel="noopener noreferrer"
-                   class="flex-1 bg-white p-6 rounded-2xl border border-gray-200 hover:border-yellow-300 hover:shadow-lg transition group cursor-pointer focus:ring-4 focus:ring-yellow-100 outline-none prevent-select">
+                   class="flex-1 bg-white p-6 rounded-2xl border border-gray-200 hover:border-yellow-300 hover:shadow-lg transition group cursor-pointer focus-visible:ring-4 focus-visible:ring-yellow-100 outline-none prevent-select">
                     <div class="flex items-center justify-between mb-4">
                         <div class="text-gray-300 font-black text-4xl group-hover:text-yellow-500 transition">01</div>
                         <div class="bg-gray-50 p-2 rounded-full shadow-sm group-hover:bg-yellow-50 transition">🖥️</div>
@@ -545,7 +550,7 @@
                 </div>
                 <a href="https://docs.google.com/forms/d/e/1FAIpQLScYWcrQiP2zk-0vMZYGfq-doLnzZWJtXiIN2ZpJ5rNsTJSMsw/viewform?usp=dialog"
                    target="_blank" rel="noopener noreferrer"
-                   class="inline-flex items-center px-5 py-2.5 rounded-full bg-blue-600 text-white text-sm md:text-base font-bold shadow-md hover:bg-blue-700 transition focus:ring-4 focus:ring-blue-300 outline-none prevent-select">
+                   class="inline-flex items-center px-5 py-2.5 rounded-full bg-blue-600 text-white text-sm md:text-base font-bold shadow-md hover:bg-blue-700 transition focus-visible:ring-4 focus-visible:ring-blue-300 outline-none prevent-select">
                     구글폼 상담 신청 바로가기
                     <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H7m6-4v8" />
@@ -594,7 +599,7 @@
                 
                 <button
                     onclick="closeModal('modal-buildup')"
-                    class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 bg-gray-100 rounded-full p-1 transition hover:bg-gray-200 z-10 focus:ring-2 focus:ring-blue-500 outline-none prevent-select"
+                    class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 bg-gray-100 rounded-full p-1 transition hover:bg-gray-200 z-10 focus-visible:ring-2 focus-visible:ring-blue-500 outline-none prevent-select"
                     aria-label="빌드업 안내 닫기"
                 >
                     <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -644,7 +649,9 @@
                 </div>
 
                 <div class="bg-gray-50 px-6 py-4 flex flex-row-reverse border-t border-gray-100">
-                    <button type="button" onclick="closeModal('modal-buildup')" class="w-full inline-flex justify-center rounded-xl border border-transparent shadow-sm px-4 py-3 bg-yellow-400 text-base font-bold text-white hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 sm:text-sm transition transform active:scale-95 prevent-select">
+                    <button type="button"
+                            onclick="closeModal('modal-buildup')"
+                            class="w-full inline-flex justify-center rounded-xl border border-transparent shadow-sm px-4 py-3 bg-yellow-400 text-base font-bold text-white hover:bg-yellow-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-yellow-500 sm:text-sm transition transform active:scale-95 prevent-select">
                         확인했습니다
                     </button>
                 </div>
@@ -661,7 +668,7 @@
                 
                 <button
                     onclick="closeModal('modal-jumpup')"
-                    class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 bg-gray-100 rounded-full p-1 transition hover:bg-gray-200 z-10 focus:ring-2 focus:ring-blue-500 outline-none prevent-select"
+                    class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 bg-gray-100 rounded-full p-1 transition hover:bg-gray-200 z-10 focus-visible:ring-2 focus-visible:ring-blue-500 outline-none prevent-select"
                     aria-label="점프업 안내 닫기"
                 >
                     <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -724,7 +731,9 @@
                 </div>
 
                 <div class="bg-gray-50 px-6 py-4 flex flex-row-reverse border-t border-gray-100">
-                    <button type="button" onclick="closeModal('modal-jumpup')" class="w-full inline-flex justify-center rounded-xl border border-transparent shadow-sm px-4 py-3 bg-blue-600 text-base font-bold text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:text-sm transition transform active:scale-95 prevent-select">
+                    <button type="button"
+                            onclick="closeModal('modal-jumpup')"
+                            class="w-full inline-flex justify-center rounded-xl border border-transparent shadow-sm px-4 py-3 bg-blue-600 text-base font-bold text-white hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 sm:text-sm transition transform active:scale-95 prevent-select">
                         확인했습니다
                     </button>
                 </div>
