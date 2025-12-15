@@ -119,7 +119,7 @@
 
       <!-- “경남대학교 재학생 필독” 크기 확대 -->
       <div class="inline-block bg-white/15 text-white px-6 py-3 rounded-2xl border border-white/25 backdrop-blur-sm mb-6">
-        <div class="font-impact text-3xl md:text-5xl leading-tight clickable">
+        <div class="font-impact text-3xl md:text-5xl leading-tight">
           경남대학교 재학생 필독
         </div>
       </div>
@@ -136,12 +136,12 @@
         망설이는 순간, 지원금은 사라집니다.
       </p>
 
-      <!-- ✅ 클릭하면 tracks로 이동 (요청 반영) -->
+      <!-- ✅ 클릭하면 tracks로 이동 -->
       <a href="#tracks"
          class="clickable focus-ring bg-red-500 text-white font-black text-lg inline-flex items-center gap-2 px-6 py-2 rounded-full shadow-lg animate-bounce mt-4"
          aria-label="내 학년에 맞는 혜택 섹션으로 이동">
         💸 놓치면 월 20만원 손해!
-        <span class="text-xs font-bold bg-white/15 px-2 py-1 rounded-full">클릭하면 아래로 이동</span>
+        <span class="text-xs font-bold bg-white/15 px-2 py-1 rounded-full">클릭하고 혜택 확인하기기</span>
       </a>
 
       <!-- CTA Buttons (중복 제거: 고용24 바로가기 제거, 포털만 유지) -->
@@ -326,12 +326,12 @@
             </li>
           </ol>
 
-          <!-- (선택) 이미지 안내 버튼 - 이미지 넣으면 활용 가능 -->
+          <!-- 이미지 안내 버튼 -->
           <div class="mt-5 flex items-center justify-between gap-3 bg-white border border-emerald-100 rounded-xl p-4">
             <p class="text-xs md:text-sm text-gray-700">
-              이미지 예시 보
+              이미지 예시 보기
             </p>
-            <button type="button"
+            <button id="btn-guide-images" type="button"
                     class="clickable focus-ring px-4 py-2 rounded-lg bg-emerald-600 text-white text-sm font-bold hover:bg-emerald-700 transition"
                     onclick="openGuideImages()">
               이미지로 보기
@@ -465,8 +465,9 @@
       <h2 class="font-impact text-3xl text-gray-900 mb-8">학교 포털에서 바로 예약하기</h2>
 
       <div class="flex flex-col md:flex-row justify-center gap-4 text-left max-w-5xl mx-auto">
+        <!-- ✅ group-hover가 제대로 먹도록 group 추가 -->
         <a href="https://portal.kyungnam.ac.kr/main.do" target="_blank" rel="noopener noreferrer"
-           class="flex-1 bg-white p-6 rounded-2xl border border-gray-200 hover:border-yellow-300 hover:shadow-lg transition clickable focus-ring"
+           class="group flex-1 bg-white p-6 rounded-2xl border border-gray-200 hover:border-yellow-300 hover:shadow-lg transition clickable focus-ring"
            aria-label="경남대학교 포털 새 창으로 열기">
           <div class="flex items-center justify-between mb-4">
             <div class="text-gray-300 font-black text-4xl group-hover:text-yellow-500 transition">01</div>
@@ -714,7 +715,7 @@
     </div>
   </div>
 
-  <!-- GUIDE IMAGE MODAL (선택 기능) -->
+  <!-- GUIDE IMAGE MODAL -->
   <div id="modal-guide-images" class="fixed inset-0 z-50" hidden role="dialog" aria-modal="true" aria-labelledby="modal-guide-images-title">
     <div class="modal-overlay fixed inset-0" data-close-modal="modal-guide-images"></div>
 
@@ -738,7 +739,7 @@
         <div class="px-6 py-6">
           <div class="bg-gray-50 border rounded-xl p-3">
             <img id="guideImage"
-                 src=""
+                 src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
                  alt=""
                  class="w-full h-auto rounded-lg"
                  onerror="handleGuideImageError()" />
@@ -756,7 +757,7 @@
             </button>
 
             <div class="text-sm text-gray-700 font-bold">
-              <span id="guideImageIndex">1</span> / <span id="guideImageTotal">9</span>
+              <span id="guideImageIndex">1</span> / <span id="guideImageTotal">4</span>
             </div>
 
             <button type="button"
@@ -864,6 +865,12 @@
         modal.__trapHandler = null;
       }
 
+      // ✅ 가이드 모달의 화살표 핸들러도 닫을 때 정리
+      if (modal.__arrowHandler) {
+        modal.removeEventListener('keydown', modal.__arrowHandler);
+        modal.__arrowHandler = null;
+      }
+
       if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
         lastFocusedElement.focus();
       }
@@ -893,20 +900,21 @@
     }
 
     // ----------------------
-    // 이미지 가이드(9장) - 파일만 넣으면 동작
+    // ✅ 이미지 가이드(4장) - jobcare-01~04.jpg
     // ----------------------
-const GUIDE_IMAGES = [
-  { src: 'assets/images/jobcare-02.jpg', alt: '잡케어 안내 1' },
-  { src: 'assets/images/jobcare-03.jpg', alt: '잡케어 안내 2' },
-  { src: 'assets/images/jobcare-04.jpg', alt: '재학생 맞춤형 고용서비스 가입 방법' },
-];
+    const GUIDE_IMAGES = [
+      { src: 'assets/images/jobcare-02.jpg', alt: '잡케어 안내' },
+      { src: 'assets/images/jobcare-03.jpg', alt: '잡케어 안내' },
+      { src: 'assets/images/jobcare-04.jpg', alt: '재맞고 가입 안내' 재,
+    ];
 
     let guideIndex = 0;
 
     function openGuideImages() {
       guideIndex = 0;
       renderGuideImage();
-      openModal('modal-guide-images');
+      openModal('modal-guide-images', 'btn-guide-images');
+
       // 좌/우 키로 넘기기
       const modal = document.getElementById('modal-guide-images');
       if (modal.__arrowHandler) modal.removeEventListener('keydown', modal.__arrowHandler);
