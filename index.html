@@ -5,13 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>경남대 재학생 맞춤형 고용서비스</title>
 
-  <!-- SEO / OG (선택이지만 넣어두면 공유 시 유리합니다.) -->
-  <meta name="description" content="경남대학교 재학생을 위한 맞춤형 고용서비스 안내 페이지입니다. 빌드업(1~2학년)과 점프업(3~5학년) 혜택을 확인하고 상담을 예약해 보세요." />
-  <meta property="og:title" content="경남대학교 재학생 맞춤형 고용서비스" />
-  <meta property="og:description" content="빌드업(동아리 활동비) · 점프업(취업 수당) 혜택을 확인하고 상담을 예약해 보세요." />
+  <meta name="description" content="경남대학교 재학생 맞춤형 고용서비스 안내 페이지. 빌드업(1~2학년)·점프업(3~5학년) 혜택과 신청 방법을 한눈에 확인하세요." />
+  <meta property="og:title" content="경남대 재학생 맞춤형 고용서비스" />
+  <meta property="og:description" content="빌드업·점프업 혜택과 신청 방법 안내" />
   <meta property="og:type" content="website" />
 
-  <!-- Tailwind CSS -->
+  <!-- Tailwind CSS (CDN) -->
   <script src="https://cdn.tailwindcss.com"></script>
 
   <!-- Fonts -->
@@ -19,37 +18,38 @@
   <link href="https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSans.css" rel="stylesheet">
 
   <style>
-    html { scroll-behavior: smooth; }
-
     body {
       font-family: 'Noto Sans KR', sans-serif;
       background-color: #F8FAFC;
       color: #1F2937;
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
-      opacity: 0;
-      transition: opacity 0.25s ease-in-out;
     }
-    body.loaded { opacity: 1; }
+
+    /* FOUC: DOMContentLoaded 시점에 빠르게 페이드인 */
+    body.preload { opacity: 0; }
+    body.loaded { opacity: 1; transition: opacity 0.25s ease-in-out; }
 
     .font-impact { font-family: 'Black Han Sans', sans-serif; }
     .font-gmarket { font-family: 'GmarketSans', sans-serif; }
 
-    /* 마우스로 클릭했을 때 남는 "파란 테두리 느낌"은 숨기고,
-       키보드(탭 이동) 포커스는 :focus-visible로만 보이게 합니다. */
-    :focus { outline: none; }
-    :focus:not(:focus-visible) { box-shadow: none !important; }
-    :focus-visible {
-      outline: 3px solid rgba(59, 130, 246, 0.55);
+    /* 클릭 가능한 요소 */
+    .clickable { cursor: pointer; }
+
+    /* 포커스 링: 마우스 클릭 후 “파란 테두리” 느낌을 줄이고,
+       키보드 사용자에게만 focus-visible로 표시 */
+    .focus-ring:focus { outline: none; }
+    .focus-ring:focus-visible {
+      outline: 3px solid rgba(250, 204, 21, 0.95); /* amber-400 */
       outline-offset: 4px;
-      border-radius: 14px;
+      border-radius: 16px;
     }
 
     /* HERO */
     .hero {
       background: linear-gradient(135deg, #1E40AF 0%, #2563EB 100%);
       color: white;
-      padding: 58px 20px 130px;
+      padding: 60px 20px 130px;
       text-align: center;
       border-bottom-left-radius: 40px;
       border-bottom-right-radius: 40px;
@@ -57,11 +57,11 @@
       overflow: hidden;
     }
 
-    /* 카드 */
+    /* 메인 카드 */
     .main-card {
       background: white;
       border-radius: 24px;
-      transition: all 0.3s ease-in-out;
+      transition: all 0.25s ease-in-out;
       border: 1px solid #E5E7EB;
       height: 100%;
       position: relative;
@@ -78,13 +78,12 @@
       border-radius: 16px;
       position: relative;
       overflow: hidden;
-      border: 1px solid rgba(251, 191, 36, 0.35);
     }
     .fast-pass::after {
       content: '';
       position: absolute;
-      top: 0; right: 0; bottom: 0; left: 0;
-      background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.08) 50%, transparent 60%);
+      inset: 0;
+      background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.10) 50%, transparent 60%);
       background-size: 200% 200%;
       animation: atc-shine 3s infinite;
       pointer-events: none;
@@ -103,32 +102,25 @@
       animation: modalPop 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
     @keyframes modalPop {
-      from { opacity: 0; transform: scale(0.96); }
-      to   { opacity: 1; transform: scale(1); }
+      from { opacity: 0; transform: scale(0.97); }
+      to { opacity: 1; transform: scale(1); }
     }
 
-    /* 클릭 가능한 요소 표기(커서) */
-    .clickable { cursor: pointer; }
-
-    /* 이미지 갤러리 썸네일 활성 표시 */
-    .thumb-active {
-      border-color: rgb(59 130 246);
-      box-shadow: 0 0 0 3px rgba(59,130,246,0.18);
-    }
+    /* 아코디언 내용 영역: hidden 속성 사용 */
+    [data-accordion-panel][hidden] { display: none; }
   </style>
 </head>
 
-<body class="bg-slate-50">
+<body class="bg-slate-50 preload">
+
   <!-- HERO -->
   <header class="hero shadow-lg">
     <div class="relative z-10">
-      <!-- 요청: "경남대학교 재학생 필독" 크기 키우기 -->
-      <div class="mb-4">
-        <div class="font-impact text-3xl md:text-5xl leading-tight drop-shadow-lg tracking-tight">
+
+      <!-- “경남대학교 재학생 필독” 크기 확대 -->
+      <div class="inline-block bg-white/15 text-white px-6 py-3 rounded-2xl border border-white/25 backdrop-blur-sm mb-6">
+        <div class="font-impact text-3xl md:text-5xl leading-tight clickable">
           경남대학교 재학생 필독
-        </div>
-        <div class="mt-2 inline-block bg-white/20 text-white px-4 py-1 rounded-full text-xs md:text-sm font-bold border border-white/30 backdrop-blur-sm">
-          재학생 맞춤형 고용서비스 안내
         </div>
       </div>
 
@@ -136,44 +128,29 @@
         스펙의 <span class="text-yellow-300">빌드업</span> &amp; <span class="text-green-300">점프업</span>
       </h1>
 
-      <p class="text-lg md:text-xl font-gmarket text-blue-100 font-light mb-3">
-        망설이는 순간, 지원금은 사라집니다!
+      <h2 class="text-2xl md:text-4xl font-gmarket font-bold text-white mb-6 tracking-tight opacity-90">
+        [재학생 맞춤형 고용서비스]
+      </h2>
+
+      <p class="text-lg md:text-xl font-gmarket text-blue-100 font-light mb-2">
+        망설이는 순간, 지원금은 사라집니다.
       </p>
 
-      <!-- 요청 1: 빨간 배너 클릭 시 혜택 섹션으로 이동 -->
-      <a
-        href="#benefits"
-        class="inline-block bg-red-500 text-white font-black text-lg px-6 py-2 rounded-full shadow-lg animate-bounce mt-2 clickable"
-        aria-label="혜택 확인하기 섹션으로 이동"
-        title="클릭하면 혜택 섹션으로 이동합니다."
-      >
+      <!-- ✅ 클릭하면 tracks로 이동 (요청 반영) -->
+      <a href="#tracks"
+         class="clickable focus-ring bg-red-500 text-white font-black text-lg inline-flex items-center gap-2 px-6 py-2 rounded-full shadow-lg animate-bounce mt-4"
+         aria-label="내 학년에 맞는 혜택 섹션으로 이동">
         💸 놓치면 월 20만원 손해!
+        <span class="text-xs font-bold bg-white/15 px-2 py-1 rounded-full">클릭하면 아래로 이동</span>
       </a>
 
-      <!-- CTA: 고용24 중복 버튼 제거(요청 2) -->
-      <div class="mt-8 flex flex-col md:flex-row items-center justify-center gap-3">
-        <a
-          href="#apply"
-          class="px-6 py-3 rounded-full bg-white text-blue-700 font-bold text-sm shadow-md hover:bg-blue-50 transition clickable"
-          aria-label="학교 포털에서 상담 예약 안내로 이동"
-          title="클릭하면 상담 예약 안내로 이동합니다."
-        >
+      <!-- CTA Buttons (중복 제거: 고용24 바로가기 제거, 포털만 유지) -->
+      <div class="mt-8 flex items-center justify-center">
+        <a href="#apply"
+           class="clickable focus-ring px-6 py-3 rounded-full bg-white text-blue-700 font-bold text-sm shadow-md hover:bg-blue-50 transition"
+           aria-label="학교 포털 상담 예약 방법으로 이동">
           학교 포털에서 상담 예약하기
         </a>
-
-        <a
-          href="#guide"
-          class="px-6 py-3 rounded-full border border-white/60 text-white text-sm font-bold hover:bg-white/10 transition clickable"
-          aria-label="고용24와 잡케어 준비 가이드로 이동"
-          title="클릭하면 고용24 · 잡케어 준비 가이드로 이동합니다."
-        >
-          고용24 · 잡케어 준비 가이드 보기
-        </a>
-      </div>
-
-      <!-- 클릭 가능한 요소 표기(텍스트) -->
-      <div class="mt-3 text-xs text-blue-100/90">
-        Tip. 밑줄이나 “+” 표시가 있는 영역은 클릭할 수 있습니다.
       </div>
     </div>
 
@@ -183,45 +160,38 @@
 
   <main class="max-w-6xl mx-auto px-4 -mt-12 md:-mt-16 pb-20 relative z-20">
 
-    <!-- FAST PASS: Work24 링크는 여기 하나로 정리 -->
+    <!-- FAST PASS (고용24) -->
     <div class="mb-10">
-      <a
-        href="https://www.work24.go.kr/"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="fast-pass block p-6 md:p-8 shadow-xl hover:shadow-2xl transition transform hover:scale-[1.01] clickable"
-        aria-label="고용24 사이트로 새 창에서 이동"
-        title="클릭하면 고용24로 이동합니다. (새 창)"
-      >
+      <a href="https://www.work24.go.kr/" target="_blank" rel="noopener noreferrer"
+         class="fast-pass block p-6 md:p-8 shadow-xl hover:shadow-2xl transition transform hover:scale-[1.01] clickable focus-ring"
+         aria-label="고용24 사이트 새 창으로 열기">
         <div class="flex flex-col md:flex-row items-center justify-between gap-4">
           <div class="flex items-center">
-            <!-- 요청: 어두운 배경 + 밝은 테두리 + 번개 -->
-            <div class="bg-gray-900 text-yellow-300 border border-yellow-400/70 font-black rounded-full w-12 h-12 flex items-center justify-center text-xl mr-4 shrink-0 shadow-lg">
-              ⚡
+            <!-- ⚡ 대비 개선: 어두운 배경 + 밝은 테두리 -->
+            <div class="shrink-0 w-12 h-12 rounded-full bg-gray-900 border-2 border-yellow-400 flex items-center justify-center shadow-lg mr-4">
+              <span class="text-yellow-300 text-xl" aria-hidden="true">⚡</span>
             </div>
             <div class="text-left">
               <h3 class="text-xl md:text-2xl font-bold text-white mb-1">상담 시간 절약 꿀팁!</h3>
               <p class="text-gray-300 text-sm md:text-base">
-                <strong class="text-yellow-300 border-b border-yellow-300">고용24 회원가입</strong>을 미리 해두시면 상담이 훨씬 빨라집니다.
-              </p>
-              <p class="text-xs text-gray-400 mt-1">
-                클릭하면 고용24로 이동합니다. (새 창)
+                <strong class="text-yellow-300 border-b border-yellow-300">고용24 회원가입</strong> 미리 하고 오시면 상담이 훨씬 빨라집니다.
               </p>
             </div>
           </div>
 
-          <span class="bg-white text-gray-900 font-bold px-6 py-3 rounded-lg text-sm md:text-base hover:bg-gray-100 transition shadow-lg flex items-center">
+          <span class="bg-white text-gray-900 font-bold px-6 py-3 rounded-lg text-sm md:text-base shadow-lg flex items-center">
             고용24 가입하러 가기
             <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
             </svg>
           </span>
         </div>
       </a>
     </div>
 
-    <!-- GUIDE SECTION -->
-    <section id="guide" class="mt-4 mb-16 bg-white rounded-3xl p-7 md:p-10 shadow-xl border border-blue-100">
+    <!-- 고용24 & 잡케어 준비 가이드 (아코디언) -->
+    <section class="mt-4 mb-14 bg-white rounded-3xl p-7 md:p-10 shadow-xl border border-blue-100">
       <h2 class="font-impact text-3xl text-gray-900 mb-3">
         고용24 · 잡케어 먼저 준비하면 더 편해요
       </h2>
@@ -232,82 +202,66 @@
 
       <!-- Accordion 1 -->
       <div class="border border-gray-200 rounded-2xl mb-4 overflow-hidden">
-        <button
-          type="button"
-          class="w-full flex items-center justify-between px-4 md:px-5 py-3 md:py-4 bg-gray-50 hover:bg-gray-100 transition clickable"
-          onclick="toggleGuide('guide-join', this)"
-          aria-controls="guide-join"
-          aria-expanded="false"
-          title="클릭하면 내용을 펼치거나 접습니다."
-        >
-          <div class="flex items-center gap-3 text-left">
+        <button type="button"
+                class="w-full flex items-center justify-between px-4 md:px-5 py-3 md:py-4 bg-gray-50 hover:bg-gray-100 transition clickable focus-ring"
+                data-accordion-button
+                aria-expanded="false"
+                aria-controls="guide-join">
+          <div class="flex items-center gap-2 text-left">
             <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-blue-600 text-white text-sm font-bold">1</span>
-            <div>
-              <div class="font-bold text-sm md:text-base text-gray-900">고용24 회원가입 · 실명인증 · 로그인 준비</div>
-              <div class="text-xs text-gray-500 mt-0.5">클릭하여 펼치기 / 접기</div>
-            </div>
+            <span class="font-bold text-sm md:text-base text-gray-900">
+              고용24 회원가입 · 실명인증 · 로그인 준비
+            </span>
           </div>
-          <svg id="icon-guide-join"
-               class="w-5 h-5 text-gray-400 transform transition-transform duration-200"
+          <svg class="w-5 h-5 text-gray-400 transform transition-transform duration-200"
+               data-accordion-icon
                fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
           </svg>
         </button>
 
-        <div id="guide-join" class="px-4 md:px-6 pb-5 pt-3 text-sm text-gray-700 hidden">
+        <div id="guide-join" data-accordion-panel hidden class="px-4 md:px-6 pb-5 pt-3 text-sm text-gray-700">
           <div class="mb-4 bg-blue-50 border border-blue-100 rounded-xl p-4">
             <p class="text-xs md:text-sm text-gray-700">
               <span class="font-bold text-blue-800">◈ 고용24란?</span><br>
-              모든 온라인 고용서비스를 한 곳에서 신청하고 결과를 확인할 수 있는 <span class="font-semibold">통합 포털</span>입니다. 재학생 맞춤형 고용서비스, 잡케어, 직업심리검사 등도 고용24에서 이용합니다.
+              모든 온라인 고용서비스를 한 곳에서 신청하고 결과를 확인할 수 있는 <span class="font-semibold">통합 포털</span>입니다.
+              재학생 맞춤형 고용서비스, 잡케어, 직업심리검사 등도 모두 고용24에서 이용합니다.
             </p>
           </div>
 
           <ol class="space-y-3">
-            <li>
-              <div class="flex items-start gap-3 bg-gray-50 rounded-xl p-3 border border-gray-100">
-                <div class="mt-0.5">
-                  <span class="inline-flex items-center justify-center px-3 py-1 rounded-full bg-blue-600 text-white text-[11px] font-bold whitespace-nowrap">STEP 1</span>
-                </div>
-                <div>
-                  <p class="font-bold text-gray-900 text-sm mb-1">고용24 회원가입</p>
-                  <p class="text-xs md:text-sm text-gray-700">
-                    고용24 접속 → 상단 <strong>[회원가입]</strong> 클릭 → <strong>[개인회원 가입] · [14세 이상 개인회원]</strong> 선택 → 본인확인 방법(간편인증, 금융인증서, 공동인증서, 아이핀 등) 선택 후 안내에 따라 이름, 생년월일, <strong>휴대전화번호, 이메일</strong> 등을 입력하고 가입을 완료합니다.
-                  </p>
-                  <p class="text-xs text-red-600 mt-2">
-                    ※ 실제 사용하는 <span class="font-semibold">휴대전화번호와 이메일</span>을 꼭 입력하세요. 신청 안내, 증빙 보완 요청, 수당 지급 안내가 이 연락처로 발송되며, 정보가 없거나 잘못 입력되면 신청·지급 과정에 어려움이 생길 수 있습니다.
-                  </p>
-                </div>
+            <li class="flex items-start gap-3 bg-gray-50 rounded-xl p-3 border border-gray-100">
+              <span class="inline-flex items-center justify-center px-3 py-1 rounded-full bg-blue-600 text-white text-[11px] font-bold whitespace-nowrap mt-0.5">STEP 1</span>
+              <div>
+                <p class="font-bold text-gray-900 text-sm mb-1">고용24 회원가입</p>
+                <p class="text-xs md:text-sm text-gray-700">
+                  고용24 접속 → 상단 <strong>[회원가입]</strong> → <strong>[개인회원]</strong> 선택 →
+                  <strong>본인확인(간편인증/금융/공동/아이핀 등)</strong> 후 안내에 따라 가입을 완료합니다.
+                </p>
+                <p class="text-xs text-red-600 mt-2">
+                  ※ 실제 사용하는 <span class="font-semibold">휴대전화번호와 이메일</span>을 꼭 입력하세요.
+                  안내/보완 요청/지급 안내가 이 연락처로 진행될 수 있습니다.
+                </p>
               </div>
             </li>
 
-            <li>
-              <div class="flex items-start gap-3 bg-gray-50 rounded-xl p-3 border border-gray-100">
-                <div class="mt-0.5">
-                  <span class="inline-flex items-center justify-center px-3 py-1 rounded-full bg-blue-500 text-white text-[11px] font-bold whitespace-nowrap">STEP 2</span>
-                </div>
-                <div>
-                  <p class="font-bold text-gray-900 text-sm mb-1">실명인증 (최초 1회)</p>
-                  <p class="text-xs md:text-sm text-gray-700">
-                    회원가입 후 첫 로그인을 하면 안내창에서 <strong>[실명인증]</strong>을 진행하라는 메시지가 나타납니다. 안내에 따라 실명확인을 완료한 뒤, <span class="font-semibold">한 번 더 로그인</span>하면 이후부터는 별도 실명인증 없이 바로 서비스를 이용할 수 있습니다.
-                  </p>
-                </div>
+            <li class="flex items-start gap-3 bg-gray-50 rounded-xl p-3 border border-gray-100">
+              <span class="inline-flex items-center justify-center px-3 py-1 rounded-full bg-blue-500 text-white text-[11px] font-bold whitespace-nowrap mt-0.5">STEP 2</span>
+              <div>
+                <p class="font-bold text-gray-900 text-sm mb-1">실명인증 (최초 1회)</p>
+                <p class="text-xs md:text-sm text-gray-700">
+                  회원가입 후 첫 로그인 시 안내에 따라 <strong>[실명인증]</strong>을 완료합니다.
+                </p>
               </div>
             </li>
 
-            <li>
-              <div class="flex items-start gap-3 bg-gray-50 rounded-xl p-3 border border-gray-100">
-                <div class="mt-0.5">
-                  <span class="inline-flex items-center justify-center px-3 py-1 rounded-full bg-blue-400 text-white text-[11px] font-bold whitespace-nowrap">STEP 3</span>
-                </div>
-                <div>
-                  <p class="font-bold text-gray-900 text-sm mb-1">인증서(간편/금융/공동) 로그인 준비</p>
-                  <p class="text-xs md:text-sm text-gray-700 mb-1">
-                    재학생 맞춤형 고용서비스 신청과 각종 서비스 이용을 위해 <span class="font-semibold text-blue-700">간편인증(카카오, 네이버 등) · 금융인증서 · 공동인증서</span> 중 하나로 로그인하시면 됩니다.
-                  </p>
-                  <p class="text-[11px] text-gray-500">
-                    · 공동인증서를 사용할 경우 <strong>[마이페이지] → [회원정보관리] → [(공동)인증서 등록]</strong>에서 한 번만 등록해 두면 이후에는 공동인증서로 바로 로그인할 수 있습니다.
-                  </p>
-                </div>
+            <li class="flex items-start gap-3 bg-gray-50 rounded-xl p-3 border border-gray-100">
+              <span class="inline-flex items-center justify-center px-3 py-1 rounded-full bg-blue-400 text-white text-[11px] font-bold whitespace-nowrap mt-0.5">STEP 3</span>
+              <div>
+                <p class="font-bold text-gray-900 text-sm mb-1">인증서/간편인증 로그인 준비</p>
+                <p class="text-xs md:text-sm text-gray-700">
+                  신청 과정에서 <strong>간편인증(카카오/네이버 등)</strong>, <strong>금융/공동인증서</strong> 중 하나로 로그인하면 편합니다.
+                </p>
               </div>
             </li>
           </ol>
@@ -316,122 +270,95 @@
 
       <!-- Accordion 2 -->
       <div class="border border-gray-200 rounded-2xl overflow-hidden">
-        <button
-          type="button"
-          class="w-full flex items-center justify-between px-4 md:px-5 py-3 md:py-4 bg-gray-50 hover:bg-gray-100 transition clickable"
-          onclick="toggleGuide('guide-jobcare', this)"
-          aria-controls="guide-jobcare"
-          aria-expanded="false"
-          title="클릭하면 내용을 펼치거나 접습니다."
-        >
-          <div class="flex items-center gap-3 text-left">
+        <button type="button"
+                class="w-full flex items-center justify-between px-4 md:px-5 py-3 md:py-4 bg-gray-50 hover:bg-gray-100 transition clickable focus-ring"
+                data-accordion-button
+                aria-expanded="false"
+                aria-controls="guide-jobcare">
+          <div class="flex items-center gap-2 text-left">
             <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-emerald-600 text-white text-sm font-bold">2</span>
-            <div>
-              <div class="font-bold text-sm md:text-base text-gray-900">잡케어 직업 설계서 만들기</div>
-              <div class="text-xs text-gray-500 mt-0.5">클릭하여 펼치기 / 접기</div>
-            </div>
+            <span class="font-bold text-sm md:text-base text-gray-900">
+              잡케어 직업 설계서 만들기
+            </span>
           </div>
-          <svg id="icon-guide-jobcare"
-               class="w-5 h-5 text-gray-400 transform transition-transform duration-200"
+          <svg class="w-5 h-5 text-gray-400 transform transition-transform duration-200"
+               data-accordion-icon
                fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
           </svg>
         </button>
 
-        <div id="guide-jobcare" class="px-4 md:px-6 pb-5 pt-3 text-sm text-gray-700 hidden">
+        <div id="guide-jobcare" data-accordion-panel hidden class="px-4 md:px-6 pb-5 pt-3 text-sm text-gray-700">
           <p class="text-xs md:text-sm text-gray-700 mb-3">
-            재학생 맞춤형 고용서비스에서 요구하는 <strong>직업 설계서</strong>는 잡케어의 <strong>「관심사항으로 만들기」</strong> 기능으로 간단히 작성할 수 있습니다.
+            재학생 맞춤형 고용서비스에서 요구하는 <strong>직업 설계서</strong>는 잡케어의 <strong>「관심사항으로 만들기」</strong> 기능으로 작성할 수 있습니다.
           </p>
 
           <ol class="space-y-3">
-            <li>
-              <div class="flex items-start gap-3 bg-emerald-50 rounded-xl p-3 border border-emerald-100">
-                <div class="mt-0.5">
-                  <span class="inline-flex items-center justify-center px-3 py-1 rounded-full bg-emerald-600 text-white text-[11px] font-bold whitespace-nowrap">STEP 1</span>
-                </div>
-                <div>
-                  <p class="font-bold text-gray-900 text-sm mb-1">잡케어 메뉴 찾기</p>
-                  <p class="text-xs md:text-sm text-gray-700">
-                    <strong>PC/모바일:</strong> 고용24 로그인 후 메인 화면의 검색창 아래 <strong>[취업준비]</strong> 영역에서 <strong>[잡케어]</strong> 아이콘을 클릭합니다.
-                  </p>
-                </div>
+            <li class="flex items-start gap-3 bg-emerald-50 rounded-xl p-3 border border-emerald-100">
+              <span class="inline-flex items-center justify-center px-3 py-1 rounded-full bg-emerald-600 text-white text-[11px] font-bold whitespace-nowrap mt-0.5">STEP 1</span>
+              <div>
+                <p class="font-bold text-gray-900 text-sm mb-1">잡케어 메뉴 찾기</p>
+                <p class="text-xs md:text-sm text-gray-700">
+                  고용24 로그인 후 메인에서 <strong>[취업준비]</strong> 영역의 <strong>[잡케어]</strong>를 클릭합니다.
+                </p>
               </div>
             </li>
 
-            <li>
-              <div class="flex items-start gap-3 bg-emerald-50 rounded-xl p-3 border border-emerald-100">
-                <div class="mt-0.5">
-                  <span class="inline-flex items-center justify-center px-3 py-1 rounded-full bg-emerald-500 text-white text-[11px] font-bold whitespace-nowrap">STEP 2</span>
-                </div>
-                <div>
-                  <p class="font-bold text-gray-900 text-sm mb-1">관심사항으로 직업 설계서 만들기</p>
-                  <p class="text-xs md:text-sm text-gray-700">
-                    잡케어 메인에서 <strong>[직업 설계서 만들기]</strong> 버튼 → <strong>[관심사항으로 만들기]</strong> 선택 후, 전공/관심 직무/자격증/하고 싶은 일 등을 <strong>키워드 3~5개 이상</strong> 입력하면 AI가 자동으로 직업 설계서를 생성합니다. 생성된 설계서 중 희망 직업을 선택한 뒤 <strong>직업 설계서 만들기</strong>를 눌러주세요.
-                  </p>
-                </div>
+            <li class="flex items-start gap-3 bg-emerald-50 rounded-xl p-3 border border-emerald-100">
+              <span class="inline-flex items-center justify-center px-3 py-1 rounded-full bg-emerald-500 text-white text-[11px] font-bold whitespace-nowrap mt-0.5">STEP 2</span>
+              <div>
+                <p class="font-bold text-gray-900 text-sm mb-1">관심사항으로 만들기</p>
+                <p class="text-xs md:text-sm text-gray-700">
+                  <strong>[직업 설계서 만들기]</strong> → <strong>[관심사항으로 만들기]</strong> 선택 후,
+                  전공/관심직무/자격증/하고 싶은 일 키워드를 <strong>3~5개 이상</strong> 입력해 생성합니다.
+                </p>
               </div>
             </li>
 
-            <li>
-              <div class="flex items-start gap-3 bg-emerald-50 rounded-xl p-3 border border-emerald-100">
-                <div class="mt-0.5">
-                  <span class="inline-flex items-center justify-center px-3 py-1 rounded-full bg-emerald-400 text-white text-[11px] font-bold whitespace-nowrap">STEP 3</span>
-                </div>
-                <div>
-                  <p class="font-bold text-gray-900 text-sm mb-1">직업 설계서 저장 · 확인</p>
-                  <p class="text-xs md:text-sm text-gray-700">
-                    생성된 직업 설계서는 <strong>[나의 직업 설계서]</strong>에서 다시 확인할 수 있습니다. 직업 이름, 필요한 역량, 관련 자격증, 연관 직무 정보가 함께 정리됩니다.
-                  </p>
-                  <p class="text-[11px] text-gray-600 mt-1">
-                    · 관심 직업이 2~3개라면 각각 설계서를 만들어 두면 상담이 더 풍부해집니다.
-                  </p>
-                </div>
+            <li class="flex items-start gap-3 bg-emerald-50 rounded-xl p-3 border border-emerald-100">
+              <span class="inline-flex items-center justify-center px-3 py-1 rounded-full bg-emerald-400 text-white text-[11px] font-bold whitespace-nowrap mt-0.5">STEP 3</span>
+              <div>
+                <p class="font-bold text-gray-900 text-sm mb-1">저장 · 확인</p>
+                <p class="text-xs md:text-sm text-gray-700">
+                  생성된 설계서는 <strong>[나의 직업 설계서]</strong>에서 다시 확인할 수 있습니다.
+                </p>
               </div>
             </li>
           </ol>
-        </div>
-      </div>
 
-      <!-- 요청: 검은 표시 영역에 '이미지 보기' 버튼 배치 -->
-      <div class="mt-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 bg-slate-50 border border-slate-200 rounded-2xl p-4">
-        <div class="text-sm text-gray-700">
-          <div class="font-bold text-gray-900">잡케어 방법 안내를 이미지로 보고 싶으신가요?</div>
-          <div class="text-xs text-gray-500 mt-1">버튼을 누르면 4장 이미지를 팝업에서 넘겨볼 수 있습니다. (키보드 ←/→, ESC 지원)</div>
+          <!-- (선택) 이미지 안내 버튼 - 이미지 넣으면 활용 가능 -->
+          <div class="mt-5 flex items-center justify-between gap-3 bg-white border border-emerald-100 rounded-xl p-4">
+            <p class="text-xs md:text-sm text-gray-700">
+              이미지로 안내(선택). <span class="font-semibold">assets/images</span>에 파일을 넣으면 슬라이드로 볼 수 있습니다.
+            </p>
+            <button type="button"
+                    class="clickable focus-ring px-4 py-2 rounded-lg bg-emerald-600 text-white text-sm font-bold hover:bg-emerald-700 transition"
+                    onclick="openGuideImages()">
+              이미지로 보기
+            </button>
+          </div>
         </div>
-
-        <button
-          id="btn-jobcare-gallery"
-          type="button"
-          class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-blue-600 text-white font-bold text-sm shadow-md hover:bg-blue-700 transition clickable"
-          onclick="openJobcareModal(0)"
-          aria-label="잡케어 방법 안내 이미지 보기 팝업 열기"
-          title="클릭하면 잡케어 안내 이미지를 팝업으로 봅니다."
-        >
-          📷 잡케어 방법 안내 이미지 보기 (4장)
-        </button>
       </div>
     </section>
 
-    <!-- BENEFITS (혜택 섹션 앵커) -->
-    <div id="benefits" class="text-center mb-10 scroll-mt-24">
+    <!-- TRACKS -->
+    <div id="tracks" class="text-center mb-10 scroll-mt-24">
       <h2 class="font-impact text-3xl text-gray-800 mb-2">👇 내 학년에 맞는 혜택 확인하기</h2>
       <p class="text-gray-500 text-sm bg-white inline-block px-4 py-1 rounded-full shadow-sm border">
-        카드(박스)를 클릭하면 상세 혜택을 볼 수 있어요.
+        카드를 클릭하면 상세 혜택을 볼 수 있어요.
       </p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-      <!-- BUILD-UP Card -->
-      <div
-        id="btn-buildup"
-        role="button"
-        tabindex="0"
-        onclick="openModal('modal-buildup', 'btn-buildup')"
-        onkeydown="if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openModal('modal-buildup', 'btn-buildup'); }"
-        class="main-card p-8 group hover:border-yellow-400 clickable"
-        aria-label="빌드업 프로젝트 상세 안내 팝업 열기"
-        title="클릭하면 빌드업 안내 팝업이 열립니다."
-      >
+
+      <!-- BUILD-UP -->
+      <div id="btn-buildup"
+           role="button"
+           tabindex="0"
+           class="main-card p-8 group hover:border-yellow-400 clickable focus-ring"
+           aria-label="빌드업 상세 안내 열기"
+           onclick="openModal('modal-buildup', 'btn-buildup')"
+           onkeydown="if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openModal('modal-buildup', 'btn-buildup'); }">
         <div class="absolute top-0 left-0 w-full h-3 bg-yellow-400 rounded-t-2xl"></div>
 
         <div class="absolute top-5 right-5 bg-yellow-50 text-yellow-600 rounded-full p-2 opacity-70 group-hover:opacity-100 group-hover:scale-110 transition">
@@ -444,9 +371,11 @@
           <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-black inline-block mb-2 shadow-sm">
             1 ~ 2학년 (저학년)
           </span>
-          <h3 class="font-gmarket text-3xl font-black text-gray-900 group-hover:text-yellow-600 transition">빌드업 프로젝트</h3>
+          <h3 class="font-gmarket text-3xl font-black text-gray-900 group-hover:text-yellow-600 transition">
+            빌드업 프로젝트
+          </h3>
           <p class="text-gray-500 text-sm mt-2">"아직 진로가 고민이라면?"</p>
-          <p class="text-xs text-gray-400 mt-2">클릭하면 상세 안내가 팝업으로 열립니다.</p>
+          <p class="text-xs text-gray-500 mt-2">카드 클릭 시 상세 안내가 열립니다.</p>
         </div>
 
         <div class="bg-yellow-50 rounded-xl p-6 mb-6 text-center border border-yellow-200 group-hover:bg-yellow-100 transition">
@@ -476,17 +405,14 @@
         </div>
       </div>
 
-      <!-- JUMP-UP Card -->
-      <div
-        id="btn-jumpup"
-        role="button"
-        tabindex="0"
-        onclick="openModal('modal-jumpup', 'btn-jumpup')"
-        onkeydown="if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openModal('modal-jumpup', 'btn-jumpup'); }"
-        class="main-card p-8 group hover:border-blue-500 clickable"
-        aria-label="점프업 프로젝트 상세 안내 팝업 열기"
-        title="클릭하면 점프업 안내 팝업이 열립니다."
-      >
+      <!-- JUMP-UP -->
+      <div id="btn-jumpup"
+           role="button"
+           tabindex="0"
+           class="main-card p-8 group hover:border-blue-500 clickable focus-ring"
+           aria-label="점프업 상세 안내 열기"
+           onclick="openModal('modal-jumpup', 'btn-jumpup')"
+           onkeydown="if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openModal('modal-jumpup', 'btn-jumpup'); }">
         <div class="absolute top-0 left-0 w-full h-3 bg-blue-600 rounded-t-2xl"></div>
 
         <div class="absolute top-5 right-5 bg-blue-50 text-blue-600 rounded-full p-2 opacity-70 group-hover:opacity-100 group-hover:scale-110 transition">
@@ -499,9 +425,11 @@
           <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-black inline-block mb-2 shadow-sm">
             3 ~ 5학년 (고학년)
           </span>
-          <h3 class="font-gmarket text-3xl font-black text-gray-900 group-hover:text-blue-600 transition">점프업 프로젝트</h3>
+          <h3 class="font-gmarket text-3xl font-black text-gray-900 group-hover:text-blue-600 transition">
+            점프업 프로젝트
+          </h3>
           <p class="text-gray-500 text-sm mt-2">"취업 준비 비용이 걱정된다면?"</p>
-          <p class="text-xs text-gray-400 mt-2">클릭하면 상세 안내가 팝업으로 열립니다.</p>
+          <p class="text-xs text-gray-500 mt-2">카드 클릭 시 상세 안내가 열립니다.</p>
         </div>
 
         <div class="bg-blue-50 rounded-xl p-6 mb-6 text-center border border-blue-200 group-hover:bg-blue-100 transition">
@@ -532,26 +460,24 @@
       </div>
     </div>
 
-    <!-- APPLY -->
-    <section id="apply" class="bg-white rounded-3xl p-8 md:p-12 shadow-xl border border-gray-100 text-center">
+    <!-- HOW TO APPLY -->
+    <section id="apply" class="bg-white rounded-3xl p-8 md:p-12 shadow-xl border border-gray-100 text-center scroll-mt-24">
       <h2 class="font-impact text-3xl text-gray-900 mb-8">학교 포털에서 바로 예약하기</h2>
 
       <div class="flex flex-col md:flex-row justify-center gap-4 text-left max-w-5xl mx-auto">
         <a href="https://portal.kyungnam.ac.kr/main.do" target="_blank" rel="noopener noreferrer"
-           class="flex-1 bg-white p-6 rounded-2xl border border-gray-200 hover:border-yellow-300 hover:shadow-lg transition group clickable"
-           aria-label="경남대학교 포털로 이동 (새 창)"
-           title="클릭하면 경남대학교 포털로 이동합니다. (새 창)"
-        >
+           class="flex-1 bg-white p-6 rounded-2xl border border-gray-200 hover:border-yellow-300 hover:shadow-lg transition clickable focus-ring"
+           aria-label="경남대학교 포털 새 창으로 열기">
           <div class="flex items-center justify-between mb-4">
             <div class="text-gray-300 font-black text-4xl group-hover:text-yellow-500 transition">01</div>
-            <div class="bg-gray-50 p-2 rounded-full shadow-sm group-hover:bg-yellow-50 transition">🖥️</div>
+            <div class="bg-gray-50 p-2 rounded-full shadow-sm">🖥️</div>
           </div>
           <h4 class="font-bold text-lg mb-1">포털 접속</h4>
           <p class="text-sm text-gray-600">경남대학교 포털시스템 로그인</p>
           <span class="text-xs font-bold text-blue-600 mt-4 inline-block bg-blue-50 px-2 py-1 rounded">바로가기 ↗</span>
         </a>
 
-        <div class="flex-1 bg-yellow-50 p-6 rounded-2xl border border-yellow-100 hover:border-yellow-300 hover:shadow-lg transition">
+        <div class="flex-1 bg-yellow-50 p-6 rounded-2xl border border-yellow-100">
           <div class="flex items-center justify-between mb-4">
             <div class="text-yellow-400 font-black text-4xl">02</div>
             <div class="bg-white p-2 rounded-full shadow-sm">🖱️</div>
@@ -562,7 +488,7 @@
           </p>
         </div>
 
-        <div class="flex-1 bg-yellow-100 p-6 rounded-2xl border border-yellow-300 border-l-4 border-l-yellow-400 hover:border-yellow-500 hover:shadow-lg transition">
+        <div class="flex-1 bg-yellow-100 p-6 rounded-2xl border border-yellow-300 border-l-4 border-l-yellow-400">
           <div class="flex items-center justify-between mb-4">
             <div class="text-yellow-500 font-black text-4xl">03</div>
             <div class="bg-white p-2 rounded-full shadow-sm">✅</div>
@@ -584,20 +510,15 @@
           <p class="text-sm md:text-base text-gray-700 font-medium">
             포털시스템에 희망하는 시간과 날짜가 없다면?
           </p>
-          <p class="text-xs text-gray-500 mt-1">
-            아래 버튼을 클릭하면 구글폼으로 신청할 수 있습니다. (새 창)
-          </p>
         </div>
-
         <a href="https://docs.google.com/forms/d/e/1FAIpQLScYWcrQiP2zk-0vMZYGfq-doLnzZWJtXiIN2ZpJ5rNsTJSMsw/viewform?usp=dialog"
            target="_blank" rel="noopener noreferrer"
-           class="inline-flex items-center px-5 py-2.5 rounded-full bg-blue-600 text-white text-sm md:text-base font-bold shadow-md hover:bg-blue-700 transition clickable"
-           aria-label="구글폼 상담 신청 바로가기 (새 창)"
-           title="클릭하면 구글폼 상담 신청으로 이동합니다. (새 창)"
-        >
+           class="inline-flex items-center px-5 py-2.5 rounded-full bg-blue-600 text-white text-sm md:text-base font-bold shadow-md hover:bg-blue-700 transition clickable focus-ring"
+           aria-label="구글폼 상담 신청 새 창으로 열기">
           구글폼 상담 신청 바로가기
           <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H7m6-4v8" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M17 8l4 4m0 0l-4 4m4-4H7m6-4v8" />
           </svg>
         </a>
       </div>
@@ -612,14 +533,14 @@
 
       <div class="flex flex-col md:flex-row justify-center items-center gap-4">
         <div class="bg-gray-700 rounded-lg px-6 py-3 flex items-center">
-          <span class="text-yellow-400 text-xl mr-3">📞</span>
+          <span class="text-yellow-400 text-xl mr-3" aria-hidden="true">📞</span>
           <div class="text-left">
             <p class="text-xs text-gray-400">문의 전화</p>
             <p class="font-bold text-white select-all">055-249-6531 ~ 6534</p>
           </div>
         </div>
         <div class="bg-gray-700 rounded-lg px-6 py-3 flex items-center">
-          <span class="text-yellow-400 text-xl mr-3">📍</span>
+          <span class="text-yellow-400 text-xl mr-3" aria-hidden="true">📍</span>
           <div class="text-left">
             <p class="text-xs text-gray-400">방문 위치</p>
             <p class="font-bold text-white select-all">창조관 1층 104호</p>
@@ -635,25 +556,24 @@
   </footer>
 
   <!-- ================== MODALS ================== -->
-  <!-- Build-up Modal -->
-  <div id="modal-buildup" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true" aria-labelledby="modal-buildup-title">
-    <div class="modal-overlay fixed inset-0 transition-opacity" onclick="closeModal('modal-buildup')"></div>
-    <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-      <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
 
-      <div class="modal-content inline-block align-bottom bg-white rounded-2xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full relative">
-        <button
-          onclick="closeModal('modal-buildup')"
-          class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 bg-gray-100 rounded-full p-1 transition hover:bg-gray-200 z-10 clickable"
-          aria-label="빌드업 안내 닫기"
-          title="닫기"
-        >
+  <!-- BUILDUP MODAL -->
+  <div id="modal-buildup" class="fixed inset-0 z-50" hidden role="dialog" aria-modal="true" aria-labelledby="modal-buildup-title">
+    <div class="modal-overlay fixed inset-0" data-close-modal="modal-buildup"></div>
+
+    <div class="flex items-center justify-center min-h-screen px-4 py-10 text-center">
+      <div class="modal-content inline-block bg-white rounded-2xl text-left overflow-hidden shadow-2xl w-full max-w-lg relative">
+
+        <button type="button"
+                class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 bg-gray-100 rounded-full p-1 transition hover:bg-gray-200 z-10 clickable focus-ring"
+                aria-label="빌드업 안내 닫기"
+                data-close-modal="modal-buildup">
           <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" focusable="false">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
 
-        <div class="bg-yellow-50 px-6 py-6 border-b border-yellow-100 relative">
+        <div class="bg-yellow-50 px-6 py-6 border-b border-yellow-100">
           <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-bold border border-yellow-200">1~2학년 대상</span>
           <h3 id="modal-buildup-title" class="text-2xl font-black mt-3 text-gray-900 leading-tight">🏗 빌드업(Build-up)<br>경력개발로드맵</h3>
           <p class="text-yellow-800 font-bold text-sm mt-2">"진로가 막막하다면? 일단 빌드업부터!"</p>
@@ -671,49 +591,39 @@
             <ul class="space-y-3">
               <li class="flex items-start">
                 <span class="bg-yellow-400 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold mr-3 shrink-0 mt-0.5">1</span>
-                <div>
-                  <strong class="text-gray-800 block">나를 이해하기</strong>
-                  <span class="text-xs text-gray-500">최근 재미있었던 활동, 강점, 성격 등을 정리하며 ‘나’를 돌아봅니다.</span>
-                </div>
+                <div><strong class="text-gray-800 block">나를 이해하기</strong><span class="text-xs text-gray-500">최근 재미있었던 활동, 강점, 성격 등을 정리하며 ‘나’를 돌아봅니다.</span></div>
               </li>
               <li class="flex items-start">
                 <span class="bg-yellow-400 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold mr-3 shrink-0 mt-0.5">2</span>
-                <div>
-                  <strong class="text-gray-800 block">희망 직업 정하기</strong>
-                  <span class="text-xs text-gray-500">관심 있는 직업을 최소 1~2개 선택해 진로 방향을 잡습니다.</span>
-                </div>
+                <div><strong class="text-gray-800 block">희망 직업 정하기</strong><span class="text-xs text-gray-500">관심 있는 직업을 최소 1~2개 선택해 방향을 잡습니다.</span></div>
               </li>
               <li class="flex items-start">
                 <span class="bg-yellow-400 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold mr-3 shrink-0 mt-0.5">3</span>
                 <div>
                   <strong class="text-gray-800 block">단기·중장기 계획 세우기</strong>
-                  <span class="text-xs text-gray-500 block mb-1"><strong>단기:</strong> 올해 안에 실천할 계획(교내·외 프로그램, 직무체험 등)</span>
-                  <span class="text-xs text-gray-500 block"><strong>중장기:</strong> 3~4학년 활동 계획(자격증, 어학, 인턴 등)</span>
+                  <span class="text-xs text-gray-500 block mb-1"><strong>단기:</strong> 올해 안에 실천할 계획</span>
+                  <span class="text-xs text-gray-500 block"><strong>중장기:</strong> 3~4학년 활동 계획</span>
                 </div>
               </li>
               <li class="flex items-start">
                 <span class="bg-yellow-400 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold mr-3 shrink-0 mt-0.5">4</span>
-                <div>
-                  <strong class="text-gray-800 block">나의 다짐 쓰기</strong>
-                  <span class="text-xs text-gray-500">대학 생활 동안 꼭 이루고 싶은 목표와 다짐을 작성합니다.</span>
-                </div>
+                <div><strong class="text-gray-800 block">나의 다짐 쓰기</strong><span class="text-xs text-gray-500">대학 생활 동안 이루고 싶은 목표와 다짐을 작성합니다.</span></div>
               </li>
             </ul>
           </div>
 
           <div class="bg-yellow-50 p-4 rounded-xl text-center">
-            <span class="text-2xl block mb-2">🎓</span>
+            <span class="text-2xl block mb-2" aria-hidden="true">🎓</span>
             <p class="text-yellow-900 font-bold text-sm">
-              완료 시 전공·관심사·목표가 한눈에 보이는<br>
-              <span class="bg-yellow-200 px-1">'개인 경력 설계도'</span>가 완성됩니다!
+              완료 시 전공·관심사·목표가 한눈에 보이는<br><span class="bg-yellow-200 px-1">'개인 경력 설계도'</span>가 완성됩니다!
             </p>
           </div>
         </div>
 
-        <div class="bg-gray-50 px-6 py-4 flex flex-row-reverse border-t border-gray-100">
-          <button type="button" onclick="closeModal('modal-buildup')"
-            class="w-full inline-flex justify-center rounded-xl border border-transparent shadow-sm px-4 py-3 bg-yellow-400 text-base font-bold text-white hover:bg-yellow-500 transition transform active:scale-95 clickable"
-          >
+        <div class="bg-gray-50 px-6 py-4 border-t border-gray-100">
+          <button type="button"
+                  class="w-full inline-flex justify-center rounded-xl px-4 py-3 bg-yellow-400 text-base font-bold text-white hover:bg-yellow-500 transition clickable focus-ring"
+                  data-close-modal="modal-buildup">
             확인했습니다
           </button>
         </div>
@@ -721,25 +631,23 @@
     </div>
   </div>
 
-  <!-- Jump-up Modal -->
-  <div id="modal-jumpup" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true" aria-labelledby="modal-jumpup-title">
-    <div class="modal-overlay fixed inset-0 transition-opacity" onclick="closeModal('modal-jumpup')"></div>
-    <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-      <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+  <!-- JUMPUP MODAL -->
+  <div id="modal-jumpup" class="fixed inset-0 z-50" hidden role="dialog" aria-modal="true" aria-labelledby="modal-jumpup-title">
+    <div class="modal-overlay fixed inset-0" data-close-modal="modal-jumpup"></div>
 
-      <div class="modal-content inline-block align-bottom bg-white rounded-2xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full relative">
-        <button
-          onclick="closeModal('modal-jumpup')"
-          class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 bg-gray-100 rounded-full p-1 transition hover:bg-gray-200 z-10 clickable"
-          aria-label="점프업 안내 닫기"
-          title="닫기"
-        >
+    <div class="flex items-center justify-center min-h-screen px-4 py-10 text-center">
+      <div class="modal-content inline-block bg-white rounded-2xl text-left overflow-hidden shadow-2xl w-full max-w-lg relative">
+
+        <button type="button"
+                class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 bg-gray-100 rounded-full p-1 transition hover:bg-gray-200 z-10 clickable focus-ring"
+                aria-label="점프업 안내 닫기"
+                data-close-modal="modal-jumpup">
           <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" focusable="false">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
 
-        <div class="bg-blue-50 px-6 py-6 border-b border-blue-100 relative">
+        <div class="bg-blue-50 px-6 py-6 border-b border-blue-100">
           <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-bold border border-blue-200">3~5학년 대상</span>
           <h3 id="modal-jumpup-title" class="text-2xl font-black mt-3 text-gray-900 leading-tight">🚀 점프업(Jump-up)<br>프로젝트</h3>
           <p class="text-blue-700 font-bold text-sm mt-2">"계획만 세우지 말고, 실천하면 돈이 됩니다!"</p>
@@ -755,17 +663,17 @@
           <div>
             <h4 class="font-bold text-gray-900 mb-3 border-b pb-1">🏃‍♂️ 참여 프로세스</h4>
             <ol class="border-l border-blue-200 ml-2 space-y-4">
-              <li class="relative mb-2 ml-4 pl-4">
+              <li class="relative ml-4 pl-4">
                 <span class="absolute w-3 h-3 bg-blue-500 rounded-full -left-1.5 border border-white mt-1.5"></span>
                 <h5 class="font-bold text-gray-800">IAP 계획 수립 → 컨설턴트 승인</h5>
                 <p class="text-xs text-gray-500">⚠️ 승인된 이후 활동만 인정됩니다.</p>
               </li>
-              <li class="relative mb-2 ml-4 pl-4">
+              <li class="relative ml-4 pl-4">
                 <span class="absolute w-3 h-3 bg-blue-300 rounded-full -left-1.5 border border-white mt-1.5"></span>
                 <h5 class="font-bold text-gray-800">한 달 동안 활동 진행</h5>
                 <p class="text-xs text-gray-500">월 최대 20시간 인정</p>
               </li>
-              <li class="relative mb-2 ml-4 pl-4">
+              <li class="relative ml-4 pl-4">
                 <span class="absolute w-3 h-3 bg-blue-300 rounded-full -left-1.5 border border-white mt-1.5"></span>
                 <h5 class="font-bold text-gray-800">결과 제출 &amp; 수당 신청</h5>
                 <p class="text-xs text-gray-500">증빙자료 업로드 → 본인 계좌 입금</p>
@@ -785,21 +693,20 @@
           <div class="bg-red-50 p-3 rounded-lg border border-red-100 flex items-start">
             <svg class="w-5 h-5 text-red-500 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
-              </path>
+                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
             </svg>
             <div class="text-xs text-red-600">
               <strong>중요 포인트</strong><br>
-              - 매달 수립한 IAP 건수의 <strong>70% 이상 이행 필수!</strong><br>
-              - 모든 활동은 <strong>IAP 승인 이후 시작한 것만 인정!</strong>
+              - 매달 수립한 IAP 건수의 <strong>70% 이상 이행</strong>이 필요할 수 있습니다.<br>
+              - 모든 활동은 <strong>IAP 승인 이후 시작한 것만</strong> 인정됩니다.
             </div>
           </div>
         </div>
 
-        <div class="bg-gray-50 px-6 py-4 flex flex-row-reverse border-t border-gray-100">
-          <button type="button" onclick="closeModal('modal-jumpup')"
-            class="w-full inline-flex justify-center rounded-xl border border-transparent shadow-sm px-4 py-3 bg-blue-600 text-base font-bold text-white hover:bg-blue-700 transition transform active:scale-95 clickable"
-          >
+        <div class="bg-gray-50 px-6 py-4 border-t border-gray-100">
+          <button type="button"
+                  class="w-full inline-flex justify-center rounded-xl px-4 py-3 bg-blue-600 text-base font-bold text-white hover:bg-blue-700 transition clickable focus-ring"
+                  data-close-modal="modal-jumpup">
             확인했습니다
           </button>
         </div>
@@ -807,79 +714,56 @@
     </div>
   </div>
 
-  <!-- Jobcare Image Gallery Modal -->
-  <div id="modal-jobcare" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true" aria-labelledby="modal-jobcare-title">
-    <div class="modal-overlay fixed inset-0 transition-opacity" onclick="closeModal('modal-jobcare')"></div>
+  <!-- GUIDE IMAGE MODAL (선택 기능) -->
+  <div id="modal-guide-images" class="fixed inset-0 z-50" hidden role="dialog" aria-modal="true" aria-labelledby="modal-guide-images-title">
+    <div class="modal-overlay fixed inset-0" data-close-modal="modal-guide-images"></div>
 
-    <div class="flex items-center justify-center min-h-screen px-4 py-8 text-center">
-      <div class="modal-content bg-white rounded-2xl text-left overflow-hidden shadow-2xl w-full max-w-5xl relative">
-        <button
-          onclick="closeModal('modal-jobcare')"
-          class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 bg-gray-100 rounded-full p-2 transition hover:bg-gray-200 z-10 clickable"
-          aria-label="잡케어 이미지 팝업 닫기"
-          title="닫기 (ESC)"
-        >
+    <div class="flex items-center justify-center min-h-screen px-4 py-10 text-center">
+      <div class="modal-content inline-block bg-white rounded-2xl text-left overflow-hidden shadow-2xl w-full max-w-3xl relative">
+
+        <button type="button"
+                class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 bg-gray-100 rounded-full p-1 transition hover:bg-gray-200 z-10 clickable focus-ring"
+                aria-label="이미지 안내 닫기"
+                data-close-modal="modal-guide-images">
           <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" focusable="false">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
 
-        <div class="px-6 pt-6 pb-4 border-b border-gray-100">
-          <div class="flex items-center justify-between gap-3">
-            <h3 id="modal-jobcare-title" class="text-2xl font-black text-gray-900">
-              📷 잡케어 방법 안내 이미지
-            </h3>
-            <div class="text-sm text-gray-500" id="jobcare-counter" aria-live="polite">1 / 4</div>
-          </div>
-          <p class="text-xs text-gray-500 mt-2">
-            키보드로도 조작할 수 있습니다. (←/→: 넘기기, ESC: 닫기)
-          </p>
+        <div class="px-6 py-5 border-b">
+          <h3 id="modal-guide-images-title" class="text-xl font-black text-gray-900">🖼️ 잡케어 안내 이미지</h3>
+          <p class="text-sm text-gray-600 mt-1">좌/우 화살표 또는 버튼으로 넘길 수 있습니다.</p>
         </div>
 
-        <div class="px-6 py-5">
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
-            <div class="lg:col-span-2 flex lg:flex-col justify-center gap-3">
-              <button type="button"
-                class="w-full inline-flex justify-center items-center px-4 py-2 rounded-xl border border-gray-200 bg-white hover:bg-gray-50 font-bold text-gray-800 transition clickable"
-                onclick="prevJobcare()"
-                aria-label="이전 이미지"
-                title="이전 (←)"
-              >
-                ← 이전
-              </button>
-            </div>
-
-            <div class="lg:col-span-8">
-              <div class="bg-gray-50 border border-gray-200 rounded-2xl p-3">
-                <img id="jobcare-main"
-                  src="./assets/images/jobcare-01.jpg"
-                  alt="잡케어 안내 1"
-                  class="w-full max-h-[56vh] object-contain rounded-xl bg-white"
-                  loading="eager"
-                />
-              </div>
-              <div class="mt-3 text-center text-sm text-gray-700" id="jobcare-title">
-                잡케어 안내 1
-              </div>
-            </div>
-
-            <div class="lg:col-span-2 flex lg:flex-col justify-center gap-3">
-              <button type="button"
-                class="w-full inline-flex justify-center items-center px-4 py-2 rounded-xl border border-gray-200 bg-white hover:bg-gray-50 font-bold text-gray-800 transition clickable"
-                onclick="nextJobcare()"
-                aria-label="다음 이미지"
-                title="다음 (→)"
-              >
-                다음 →
-              </button>
-            </div>
+        <div class="px-6 py-6">
+          <div class="bg-gray-50 border rounded-xl p-3">
+            <img id="guideImage"
+                 src=""
+                 alt=""
+                 class="w-full h-auto rounded-lg"
+                 onerror="handleGuideImageError()" />
           </div>
 
-          <div class="mt-5">
-            <div class="text-xs text-gray-500 mb-2">미리보기(썸네일)를 클릭하면 해당 이미지로 이동합니다.</div>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-3" id="jobcare-thumbs">
-              <!-- JS로 채웁니다. -->
+          <p id="guideImageFallback" class="hidden text-sm text-red-600 mt-3">
+            이미지 파일을 찾지 못했습니다. assets/images/ 폴더에 파일이 있는지, 파일명/확장자가 정확한지 확인해 주세요.
+          </p>
+
+          <div class="mt-4 flex items-center justify-between">
+            <button type="button"
+                    class="clickable focus-ring px-4 py-2 rounded-lg border font-bold hover:bg-gray-50 transition"
+                    onclick="prevGuideImage()">
+              ◀ 이전
+            </button>
+
+            <div class="text-sm text-gray-700 font-bold">
+              <span id="guideImageIndex">1</span> / <span id="guideImageTotal">9</span>
             </div>
+
+            <button type="button"
+                    class="clickable focus-ring px-4 py-2 rounded-lg border font-bold hover:bg-gray-50 transition"
+                    onclick="nextGuideImage()">
+              다음 ▶
+            </button>
           </div>
         </div>
       </div>
@@ -888,194 +772,186 @@
 
   <!-- SCRIPTS -->
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    // 빠른 페이드인
+    document.addEventListener('DOMContentLoaded', () => {
+      document.body.classList.remove('preload');
       document.body.classList.add('loaded');
-      if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-      buildJobcareThumbs();
+
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
+      window.scrollTo(0, 0);
+
+      initAccordions();
+      initModalCloseDelegation();
+      initEscToClose();
     });
 
+    // ----------------------
+    // Accordion (접근성 포함)
+    // ----------------------
+    function initAccordions() {
+      const buttons = document.querySelectorAll('[data-accordion-button]');
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const panelId = btn.getAttribute('aria-controls');
+          const panel = document.getElementById(panelId);
+          if (!panel) return;
+
+          const expanded = btn.getAttribute('aria-expanded') === 'true';
+          btn.setAttribute('aria-expanded', String(!expanded));
+
+          const icon = btn.querySelector('[data-accordion-icon]');
+          if (icon) icon.classList.toggle('rotate-180', !expanded);
+
+          panel.hidden = expanded;
+        });
+      });
+    }
+
+    // ----------------------
+    // Modal (열기/닫기)
+    // ----------------------
     let lastFocusedElement = null;
 
-    function openModal(modalId, triggerIdOrEl) {
+    function openModal(modalId, triggerId) {
       const modal = document.getElementById(modalId);
       if (!modal) return;
 
-      lastFocusedElement = document.activeElement;
-      if (typeof triggerIdOrEl === 'string') {
-        const t = document.getElementById(triggerIdOrEl);
-        if (t) lastFocusedElement = t;
-      } else if (triggerIdOrEl instanceof HTMLElement) {
-        lastFocusedElement = triggerIdOrEl;
-      }
+      lastFocusedElement = triggerId ? document.getElementById(triggerId) : document.activeElement;
 
-      modal.classList.remove('hidden');
+      modal.hidden = false;
       document.body.style.overflow = 'hidden';
 
-      const focusableElements = modal.querySelectorAll(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-      );
-      const firstElement = focusableElements[0];
-      const lastElement = focusableElements[focusableElements.length - 1];
+      // 포커스 트랩
+      const focusable = modal.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])');
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (first) first.focus();
 
-      if (firstElement) firstElement.focus();
+      // 기존 핸들러가 있으면 제거(중복 방지)
+      if (modal.__trapHandler) modal.removeEventListener('keydown', modal.__trapHandler);
 
-      // Focus trap (중복 등록 방지)
-      if (!modal.dataset.trapBound) {
-        modal.addEventListener('keydown', function(e) {
-          if (e.key === 'Tab' && focusableElements.length > 0) {
-            if (e.shiftKey) {
-              if (document.activeElement === firstElement) {
-                e.preventDefault();
-                lastElement.focus();
-              }
-            } else {
-              if (document.activeElement === lastElement) {
-                e.preventDefault();
-                firstElement.focus();
-              }
-            }
+      modal.__trapHandler = function(e) {
+        if (e.key !== 'Tab') return;
+        if (!first || !last) return;
+
+        if (e.shiftKey) {
+          if (document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
           }
-        });
-        modal.dataset.trapBound = '1';
-      }
+        } else {
+          if (document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+          }
+        }
+      };
+
+      modal.addEventListener('keydown', modal.__trapHandler);
     }
 
     function closeModal(modalId) {
       const modal = document.getElementById(modalId);
       if (!modal) return;
 
-      modal.classList.add('hidden');
+      modal.hidden = true;
       document.body.style.overflow = 'auto';
+
+      if (modal.__trapHandler) {
+        modal.removeEventListener('keydown', modal.__trapHandler);
+        modal.__trapHandler = null;
+      }
 
       if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
         lastFocusedElement.focus();
       }
     }
 
-    document.addEventListener('keydown', function(event) {
-      if (event.key !== 'Escape') return;
-
-      ['modal-buildup', 'modal-jumpup', 'modal-jobcare'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el && !el.classList.contains('hidden')) closeModal(id);
+    // 모달 닫기 이벤트 위임 (오버레이 클릭, 닫기 버튼)
+    function initModalCloseDelegation() {
+      document.addEventListener('click', (e) => {
+        const target = e.target.closest('[data-close-modal]');
+        if (!target) return;
+        const modalId = target.getAttribute('data-close-modal');
+        closeModal(modalId);
       });
-    });
-
-    // Accordion toggle
-    function toggleGuide(id, btn) {
-      const content = document.getElementById(id);
-      const icon = document.getElementById('icon-' + id);
-      if (!content) return;
-
-      const isHidden = content.classList.contains('hidden');
-      if (isHidden) {
-        content.classList.remove('hidden');
-        if (icon) icon.classList.add('rotate-180');
-        if (btn) btn.setAttribute('aria-expanded', 'true');
-      } else {
-        content.classList.add('hidden');
-        if (icon) icon.classList.remove('rotate-180');
-        if (btn) btn.setAttribute('aria-expanded', 'false');
-      }
     }
 
-    // Jobcare Gallery
-    const jobcareImages = [
-      { src: './assets/images/jobcare-01.jpg', title: '잡케어 안내 1', alt: '잡케어 안내 1' },
-      { src: './assets/images/jobcare-02.jpg', title: '잡케어 안내 2', alt: '잡케어 안내 2' },
-      { src: './assets/images/jobcare-03.jpg', title: '잡케어 안내 3', alt: '잡케어 안내 3' },
-      { src: './assets/images/jobcare-04.jpg', title: '잡케어 안내 4', alt: '잡케어 안내 4' },
-    ];
-    let jobcareIndex = 0;
+    // ESC로 닫기
+    function initEscToClose() {
+      document.addEventListener('keydown', (event) => {
+        if (event.key !== 'Escape') return;
 
-    function buildJobcareThumbs() {
-      const wrap = document.getElementById('jobcare-thumbs');
-      if (!wrap) return;
-
-      wrap.innerHTML = '';
-      jobcareImages.forEach((img, i) => {
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className =
-          'text-left border border-gray-200 rounded-xl overflow-hidden bg-white hover:bg-gray-50 transition clickable';
-        btn.setAttribute('aria-label', img.title + ' 보기');
-        btn.setAttribute('title', '클릭하면 ' + img.title + '로 이동합니다.');
-        btn.addEventListener('click', () => setJobcare(i));
-
-        const thumbImg = document.createElement('img');
-        thumbImg.src = img.src;
-        thumbImg.alt = img.alt;
-        thumbImg.loading = 'lazy';
-        thumbImg.className = 'w-full h-24 object-contain bg-white';
-
-        const cap = document.createElement('div');
-        cap.className = 'px-3 py-2 text-sm font-bold text-gray-800';
-        cap.textContent = img.title;
-
-        btn.appendChild(thumbImg);
-        btn.appendChild(cap);
-        wrap.appendChild(btn);
-      });
-
-      highlightActiveThumb();
-    }
-
-    function openJobcareModal(startIndex = 0) {
-      jobcareIndex = Math.max(0, Math.min(jobcareImages.length - 1, startIndex));
-      openModal('modal-jobcare', 'btn-jobcare-gallery');
-      renderJobcare();
-
-      const modal = document.getElementById('modal-jobcare');
-      if (modal && !modal.dataset.galleryBound) {
-        modal.addEventListener('keydown', function(e) {
-          if (e.key === 'ArrowLeft') { e.preventDefault(); prevJobcare(); }
-          if (e.key === 'ArrowRight') { e.preventDefault(); nextJobcare(); }
-          if (e.key === 'Home') { e.preventDefault(); setJobcare(0); }
-          if (e.key === 'End') { e.preventDefault(); setJobcare(jobcareImages.length - 1); }
+        const modals = ['modal-buildup', 'modal-jumpup', 'modal-guide-images'];
+        modals.forEach(id => {
+          const el = document.getElementById(id);
+          if (el && el.hidden === false) closeModal(id);
         });
-        modal.dataset.galleryBound = '1';
-      }
-    }
-
-    function setJobcare(i) {
-      jobcareIndex = Math.max(0, Math.min(jobcareImages.length - 1, i));
-      renderJobcare();
-    }
-
-    function prevJobcare() {
-      setJobcare((jobcareIndex - 1 + jobcareImages.length) % jobcareImages.length);
-    }
-
-    function nextJobcare() {
-      setJobcare((jobcareIndex + 1) % jobcareImages.length);
-    }
-
-    function renderJobcare() {
-      const main = document.getElementById('jobcare-main');
-      const title = document.getElementById('jobcare-title');
-      const counter = document.getElementById('jobcare-counter');
-
-      if (!main || !title || !counter) return;
-
-      const img = jobcareImages[jobcareIndex];
-      main.src = img.src;
-      main.alt = img.alt;
-
-      title.textContent = img.title;
-      counter.textContent = (jobcareIndex + 1) + ' / ' + jobcareImages.length;
-
-      highlightActiveThumb();
-    }
-
-    function highlightActiveThumb() {
-      const wrap = document.getElementById('jobcare-thumbs');
-      if (!wrap) return;
-
-      const buttons = wrap.querySelectorAll('button');
-      buttons.forEach((b, i) => {
-        b.classList.remove('thumb-active');
-        if (i === jobcareIndex) b.classList.add('thumb-active');
       });
+    }
+
+    // ----------------------
+    // 이미지 가이드(9장) - 파일만 넣으면 동작
+    // ----------------------
+    const GUIDE_IMAGES = [
+      { src: 'assets/images/guide-01.png', alt: '잡케어 안내 1' },
+      { src: 'assets/images/guide-02.png', alt: '잡케어 안내 2' },
+      { src: 'assets/images/guide-03.png', alt: '잡케어 안내 3' },
+      { src: 'assets/images/guide-04.png', alt: '잡케어 안내 4' },
+      { src: 'assets/images/guide-05.png', alt: '잡케어 안내 5' },
+      { src: 'assets/images/guide-06.png', alt: '잡케어 안내 6' },
+      { src: 'assets/images/guide-07.png', alt: '잡케어 안내 7' },
+      { src: 'assets/images/guide-08.png', alt: '잡케어 안내 8' },
+      { src: 'assets/images/guide-09.png', alt: '잡케어 안내 9' },
+    ];
+
+    let guideIndex = 0;
+
+    function openGuideImages() {
+      guideIndex = 0;
+      renderGuideImage();
+      openModal('modal-guide-images');
+      // 좌/우 키로 넘기기
+      const modal = document.getElementById('modal-guide-images');
+      if (modal.__arrowHandler) modal.removeEventListener('keydown', modal.__arrowHandler);
+
+      modal.__arrowHandler = function(e) {
+        if (e.key === 'ArrowLeft') prevGuideImage();
+        if (e.key === 'ArrowRight') nextGuideImage();
+      };
+      modal.addEventListener('keydown', modal.__arrowHandler);
+    }
+
+    function renderGuideImage() {
+      const img = document.getElementById('guideImage');
+      const fallback = document.getElementById('guideImageFallback');
+      const idxEl = document.getElementById('guideImageIndex');
+      const totalEl = document.getElementById('guideImageTotal');
+
+      totalEl.textContent = String(GUIDE_IMAGES.length);
+      idxEl.textContent = String(guideIndex + 1);
+
+      fallback.classList.add('hidden');
+
+      img.src = GUIDE_IMAGES[guideIndex].src;
+      img.alt = GUIDE_IMAGES[guideIndex].alt;
+    }
+
+    function handleGuideImageError() {
+      const fallback = document.getElementById('guideImageFallback');
+      fallback.classList.remove('hidden');
+    }
+
+    function nextGuideImage() {
+      guideIndex = (guideIndex + 1) % GUIDE_IMAGES.length;
+      renderGuideImage();
+    }
+
+    function prevGuideImage() {
+      guideIndex = (guideIndex - 1 + GUIDE_IMAGES.length) % GUIDE_IMAGES.length;
+      renderGuideImage();
     }
   </script>
 </body>
