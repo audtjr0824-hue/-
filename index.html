@@ -26,9 +26,8 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* FOUC: DOMContentLoaded 시점에 빠르게 페이드인 */
-    body.preload { opacity: 0; }
-    body.loaded { opacity: 1; transition: opacity 0.25s ease-in-out; }
+    /* ✅ “아무것도 안 뜨는” 사고 방지: 기본은 항상 보이게 */
+    /* 페이드인은 원하시면 추후 안전하게 다시 넣어드릴게요. */
 
     .font-impact { font-family: 'Black Han Sans', sans-serif; }
     .font-gmarket { font-family: 'GmarketSans', sans-serif; }
@@ -111,13 +110,12 @@
   </style>
 </head>
 
-<body class="bg-slate-50 preload">
+<body class="bg-slate-50">
 
   <!-- HERO -->
   <header class="hero shadow-lg">
     <div class="relative z-10">
 
-      <!-- “경남대학교 재학생 필독” 크기 확대 -->
       <div class="inline-block bg-white/15 text-white px-6 py-3 rounded-2xl border border-white/25 backdrop-blur-sm mb-6">
         <div class="font-impact text-3xl md:text-5xl leading-tight">
           경남대학교 재학생 필독
@@ -136,15 +134,16 @@
         망설이는 순간, 지원금은 사라집니다.
       </p>
 
-      <!-- ✅ 클릭하면 tracks로 이동 -->
-      <a href="#tracks"
-         class="clickable focus-ring bg-red-500 text-white font-black text-lg inline-flex items-center gap-2 px-6 py-2 rounded-full shadow-lg animate-bounce mt-4"
-         aria-label="내 학년에 맞는 혜택 섹션으로 이동">
-        💸 놓치면 월 20만원 손해!
-        <span class="text-xs font-bold bg-white/15 px-2 py-1 rounded-full">클릭하고 혜택 확인하기기</span>
-      </a>
+<a href="#tracks"
+   class="clickable focus-ring bg-red-500 text-white font-black text-lg inline-flex flex-col items-center px-6 py-3 rounded-full shadow-lg animate-bounce mt-4"
+   aria-label="내 학년에 맞는 혜택 섹션으로 이동">
+  <span class="block leading-tight">💸 놓치면 월 20만원 손해!</span>
+  <span class="block mt-1 text-xs font-bold bg-white/15 px-2 py-1 rounded-full">
+    클릭하고 혜택 확인하기
+  </span>
+</a>
 
-      <!-- CTA Buttons (중복 제거: 고용24 바로가기 제거, 포털만 유지) -->
+
       <div class="mt-8 flex items-center justify-center">
         <a href="#apply"
            class="clickable focus-ring px-6 py-3 rounded-full bg-white text-blue-700 font-bold text-sm shadow-md hover:bg-blue-50 transition"
@@ -167,7 +166,6 @@
          aria-label="고용24 사이트 새 창으로 열기">
         <div class="flex flex-col md:flex-row items-center justify-between gap-4">
           <div class="flex items-center">
-            <!-- ⚡ 대비 개선: 어두운 배경 + 밝은 테두리 -->
             <div class="shrink-0 w-12 h-12 rounded-full bg-gray-900 border-2 border-yellow-400 flex items-center justify-center shadow-lg mr-4">
               <span class="text-yellow-300 text-xl" aria-hidden="true">⚡</span>
             </div>
@@ -326,11 +324,8 @@
             </li>
           </ol>
 
-          <!-- 이미지 안내 버튼 -->
           <div class="mt-5 flex items-center justify-between gap-3 bg-white border border-emerald-100 rounded-xl p-4">
-            <p class="text-xs md:text-sm text-gray-700">
-              이미지 예시 보기
-            </p>
+            <p class="text-xs md:text-sm text-gray-700">이미지 예시 보기</p>
             <button id="btn-guide-images" type="button"
                     class="clickable focus-ring px-4 py-2 rounded-lg bg-emerald-600 text-white text-sm font-bold hover:bg-emerald-700 transition"
                     onclick="openGuideImages()">
@@ -465,7 +460,6 @@
       <h2 class="font-impact text-3xl text-gray-900 mb-8">학교 포털에서 바로 예약하기</h2>
 
       <div class="flex flex-col md:flex-row justify-center gap-4 text-left max-w-5xl mx-auto">
-        <!-- ✅ group-hover가 제대로 먹도록 group 추가 -->
         <a href="https://portal.kyungnam.ac.kr/main.do" target="_blank" rel="noopener noreferrer"
            class="group flex-1 bg-white p-6 rounded-2xl border border-gray-200 hover:border-yellow-300 hover:shadow-lg transition clickable focus-ring"
            aria-label="경남대학교 포털 새 창으로 열기">
@@ -561,10 +555,8 @@
   <!-- BUILDUP MODAL -->
   <div id="modal-buildup" class="fixed inset-0 z-50" hidden role="dialog" aria-modal="true" aria-labelledby="modal-buildup-title">
     <div class="modal-overlay fixed inset-0" data-close-modal="modal-buildup"></div>
-
     <div class="flex items-center justify-center min-h-screen px-4 py-10 text-center">
       <div class="modal-content inline-block bg-white rounded-2xl text-left overflow-hidden shadow-2xl w-full max-w-lg relative">
-
         <button type="button"
                 class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 bg-gray-100 rounded-full p-1 transition hover:bg-gray-200 z-10 clickable focus-ring"
                 aria-label="빌드업 안내 닫기"
@@ -586,39 +578,6 @@
               나의 관심사와 강점을 정리하고, 희망 직업을 정해 단기·중장기 계획까지 한 번에 정리하는 <strong>나만의 경력개발로드맵 작성 프로그램</strong>입니다.
             </p>
           </div>
-
-          <div>
-            <h4 class="font-bold text-gray-900 mb-3 border-b pb-1">📝 이렇게 진행해요</h4>
-            <ul class="space-y-3">
-              <li class="flex items-start">
-                <span class="bg-yellow-400 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold mr-3 shrink-0 mt-0.5">1</span>
-                <div><strong class="text-gray-800 block">나를 이해하기</strong><span class="text-xs text-gray-500">최근 재미있었던 활동, 강점, 성격 등을 정리하며 ‘나’를 돌아봅니다.</span></div>
-              </li>
-              <li class="flex items-start">
-                <span class="bg-yellow-400 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold mr-3 shrink-0 mt-0.5">2</span>
-                <div><strong class="text-gray-800 block">희망 직업 정하기</strong><span class="text-xs text-gray-500">관심 있는 직업을 최소 1~2개 선택해 방향을 잡습니다.</span></div>
-              </li>
-              <li class="flex items-start">
-                <span class="bg-yellow-400 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold mr-3 shrink-0 mt-0.5">3</span>
-                <div>
-                  <strong class="text-gray-800 block">단기·중장기 계획 세우기</strong>
-                  <span class="text-xs text-gray-500 block mb-1"><strong>단기:</strong> 올해 안에 실천할 계획</span>
-                  <span class="text-xs text-gray-500 block"><strong>중장기:</strong> 3~4학년 활동 계획</span>
-                </div>
-              </li>
-              <li class="flex items-start">
-                <span class="bg-yellow-400 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold mr-3 shrink-0 mt-0.5">4</span>
-                <div><strong class="text-gray-800 block">나의 다짐 쓰기</strong><span class="text-xs text-gray-500">대학 생활 동안 이루고 싶은 목표와 다짐을 작성합니다.</span></div>
-              </li>
-            </ul>
-          </div>
-
-          <div class="bg-yellow-50 p-4 rounded-xl text-center">
-            <span class="text-2xl block mb-2" aria-hidden="true">🎓</span>
-            <p class="text-yellow-900 font-bold text-sm">
-              완료 시 전공·관심사·목표가 한눈에 보이는<br><span class="bg-yellow-200 px-1">'개인 경력 설계도'</span>가 완성됩니다!
-            </p>
-          </div>
         </div>
 
         <div class="bg-gray-50 px-6 py-4 border-t border-gray-100">
@@ -635,10 +594,8 @@
   <!-- JUMPUP MODAL -->
   <div id="modal-jumpup" class="fixed inset-0 z-50" hidden role="dialog" aria-modal="true" aria-labelledby="modal-jumpup-title">
     <div class="modal-overlay fixed inset-0" data-close-modal="modal-jumpup"></div>
-
     <div class="flex items-center justify-center min-h-screen px-4 py-10 text-center">
       <div class="modal-content inline-block bg-white rounded-2xl text-left overflow-hidden shadow-2xl w-full max-w-lg relative">
-
         <button type="button"
                 class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 bg-gray-100 rounded-full p-1 transition hover:bg-gray-200 z-10 clickable focus-ring"
                 aria-label="점프업 안내 닫기"
@@ -660,48 +617,6 @@
               IAP(취업활동계획)를 세우고 이행하면 <strong>월 최대 20만원 / 연 최대 100만원</strong>까지 활동비를 지원받는 취업활동 지원 프로그램입니다.
             </p>
           </div>
-
-          <div>
-            <h4 class="font-bold text-gray-900 mb-3 border-b pb-1">🏃‍♂️ 참여 프로세스</h4>
-            <ol class="border-l border-blue-200 ml-2 space-y-4">
-              <li class="relative ml-4 pl-4">
-                <span class="absolute w-3 h-3 bg-blue-500 rounded-full -left-1.5 border border-white mt-1.5"></span>
-                <h5 class="font-bold text-gray-800">IAP 계획 수립 → 컨설턴트 승인</h5>
-                <p class="text-xs text-gray-500">⚠️ 승인된 이후 활동만 인정됩니다.</p>
-              </li>
-              <li class="relative ml-4 pl-4">
-                <span class="absolute w-3 h-3 bg-blue-300 rounded-full -left-1.5 border border-white mt-1.5"></span>
-                <h5 class="font-bold text-gray-800">한 달 동안 활동 진행</h5>
-                <p class="text-xs text-gray-500">월 최대 20시간 인정</p>
-              </li>
-              <li class="relative ml-4 pl-4">
-                <span class="absolute w-3 h-3 bg-blue-300 rounded-full -left-1.5 border border-white mt-1.5"></span>
-                <h5 class="font-bold text-gray-800">결과 제출 &amp; 수당 신청</h5>
-                <p class="text-xs text-gray-500">증빙자료 업로드 → 본인 계좌 입금</p>
-              </li>
-            </ol>
-          </div>
-
-          <div class="grid grid-cols-1 gap-3 bg-blue-50 p-4 rounded-xl border border-blue-100">
-            <h4 class="font-bold text-blue-800 mb-1">💡 인정 활동 예시</h4>
-            <ul class="list-disc pl-4 space-y-1 text-xs text-blue-900">
-              <li><strong>교내:</strong> 대학일자리플러스센터 특강, 진로상담 등</li>
-              <li><strong>교외:</strong> 학과 취업 특강, 대외활동, 인턴 (증빙 필수)</li>
-              <li><strong>온라인:</strong> 사이버진로교육센터 등 (월 최대 10시간)</li>
-            </ul>
-          </div>
-
-          <div class="bg-red-50 p-3 rounded-lg border border-red-100 flex items-start">
-            <svg class="w-5 h-5 text-red-500 mr-2 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
-            </svg>
-            <div class="text-xs text-red-600">
-              <strong>중요 포인트</strong><br>
-              - 매달 수립한 IAP 건수의 <strong>70% 이상 이행</strong>이 필요할 수 있습니다.<br>
-              - 모든 활동은 <strong>IAP 승인 이후 시작한 것만</strong> 인정됩니다.
-            </div>
-          </div>
         </div>
 
         <div class="bg-gray-50 px-6 py-4 border-t border-gray-100">
@@ -718,7 +633,6 @@
   <!-- GUIDE IMAGE MODAL -->
   <div id="modal-guide-images" class="fixed inset-0 z-50" hidden role="dialog" aria-modal="true" aria-labelledby="modal-guide-images-title">
     <div class="modal-overlay fixed inset-0" data-close-modal="modal-guide-images"></div>
-
     <div class="flex items-center justify-center min-h-screen px-4 py-10 text-center">
       <div class="modal-content inline-block bg-white rounded-2xl text-left overflow-hidden shadow-2xl w-full max-w-3xl relative">
 
@@ -746,7 +660,7 @@
           </div>
 
           <p id="guideImageFallback" class="hidden text-sm text-red-600 mt-3">
-            이미지 파일을 찾지 못했습니다. assets/images/ 폴더에 파일이 있는지, 파일명/확장자가 정확한지 확인해 주세요.
+            이미지 파일을 찾지 못했습니다. 파일 위치와 파일명을 확인해 주세요. (jobcare-01.jpg ~ jobcare-04.jpg)
           </p>
 
           <div class="mt-4 flex items-center justify-between">
@@ -773,24 +687,12 @@
 
   <!-- SCRIPTS -->
   <script>
-    // 빠른 페이드인
     document.addEventListener('DOMContentLoaded', () => {
-      document.body.classList.remove('preload');
-      document.body.classList.add('loaded');
-
-      if ('scrollRestoration' in history) {
-        history.scrollRestoration = 'manual';
-      }
-      window.scrollTo(0, 0);
-
       initAccordions();
       initModalCloseDelegation();
       initEscToClose();
     });
 
-    // ----------------------
-    // Accordion (접근성 포함)
-    // ----------------------
     function initAccordions() {
       const buttons = document.querySelectorAll('[data-accordion-button]');
       buttons.forEach(btn => {
@@ -824,13 +726,11 @@
       modal.hidden = false;
       document.body.style.overflow = 'hidden';
 
-      // 포커스 트랩
-      const focusable = modal.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])');
+      const focusable = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
       const first = focusable[0];
       const last = focusable[focusable.length - 1];
       if (first) first.focus();
 
-      // 기존 핸들러가 있으면 제거(중복 방지)
       if (modal.__trapHandler) modal.removeEventListener('keydown', modal.__trapHandler);
 
       modal.__trapHandler = function(e) {
@@ -838,15 +738,9 @@
         if (!first || !last) return;
 
         if (e.shiftKey) {
-          if (document.activeElement === first) {
-            e.preventDefault();
-            last.focus();
-          }
+          if (document.activeElement === first) { e.preventDefault(); last.focus(); }
         } else {
-          if (document.activeElement === last) {
-            e.preventDefault();
-            first.focus();
-          }
+          if (document.activeElement === last) { e.preventDefault(); first.focus(); }
         }
       };
 
@@ -865,7 +759,6 @@
         modal.__trapHandler = null;
       }
 
-      // ✅ 가이드 모달의 화살표 핸들러도 닫을 때 정리
       if (modal.__arrowHandler) {
         modal.removeEventListener('keydown', modal.__arrowHandler);
         modal.__arrowHandler = null;
@@ -876,7 +769,6 @@
       }
     }
 
-    // 모달 닫기 이벤트 위임 (오버레이 클릭, 닫기 버튼)
     function initModalCloseDelegation() {
       document.addEventListener('click', (e) => {
         const target = e.target.closest('[data-close-modal]');
@@ -886,7 +778,6 @@
       });
     }
 
-    // ESC로 닫기
     function initEscToClose() {
       document.addEventListener('keydown', (event) => {
         if (event.key !== 'Escape') return;
@@ -900,22 +791,33 @@
     }
 
     // ----------------------
-    // ✅ 이미지 가이드(4장) - jobcare-01~04.jpg
+    // ✅ 이미지 가이드(4장)
+    //  - 폴더 구조 2가지 모두 자동 대응:
+    //    1) assets/images/index.html + 같은 폴더에 jobcare-xx.jpg  -> ./jobcare-xx.jpg
+    //    2) 루트 index.html + assets/images/jobcare-xx.jpg         -> assets/images/jobcare-xx.jpg
     // ----------------------
-    const GUIDE_IMAGES = [
-      { src: 'assets/images/jobcare-02.jpg', alt: '잡케어 안내' },
-      { src: 'assets/images/jobcare-03.jpg', alt: '잡케어 안내' },
-      { src: 'assets/images/jobcare-04.jpg', alt: '재맞고 가입 안내' 재,
-    ];
+    const PREFIX_CANDIDATES = ['./', 'assets/images/'];
+    let prefixIndex = 0;
+
+    const GUIDE_FILES = ['jobcare-02.jpg', 'jobcare-03.jpg', 'jobcare-04.jpg'];
+    let GUIDE_IMAGES = buildGuideImages();
+
+    function buildGuideImages() {
+      const prefix = PREFIX_CANDIDATES[prefixIndex];
+      return GUIDE_FILES.map((file, i) => ({
+        src: prefix + file,
+        alt: '잡케어 안내 이미지 ' + (i + 1)
+      }));
+    }
 
     let guideIndex = 0;
 
     function openGuideImages() {
       guideIndex = 0;
+      GUIDE_IMAGES = buildGuideImages();
       renderGuideImage();
       openModal('modal-guide-images', 'btn-guide-images');
 
-      // 좌/우 키로 넘기기
       const modal = document.getElementById('modal-guide-images');
       if (modal.__arrowHandler) modal.removeEventListener('keydown', modal.__arrowHandler);
 
@@ -942,6 +844,15 @@
     }
 
     function handleGuideImageError() {
+      // ✅ prefix ./ 가 실패하면 assets/images/ 로 한 번 더 시도
+      if (prefixIndex < PREFIX_CANDIDATES.length - 1) {
+        prefixIndex++;
+        GUIDE_IMAGES = buildGuideImages();
+        renderGuideImage();
+        return;
+      }
+
+      // 둘 다 실패하면 안내 표시
       const fallback = document.getElementById('guideImageFallback');
       fallback.classList.remove('hidden');
     }
