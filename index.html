@@ -818,23 +818,23 @@
             이미지 파일을 찾지 못했습니다. <strong>assets/images/</strong> 폴더에 파일이 있는지, 파일명/확장자가 정확한지 확인해 주세요.
           </p>
 
-          <div class="mt-4 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <button type="button"
-                    class="clickable focus-ring w-full sm:w-auto px-5 py-2.5 rounded-lg border font-bold hover:bg-gray-50 transition"
-                    onclick="prevGuideImage()">
-              ◀ 이전
-            </button>
+<div class="mt-4 flex items-center justify-between gap-2">
+  <button type="button"
+          class="clickable focus-ring shrink-0 whitespace-nowrap px-4 py-2 rounded-lg border font-bold hover:bg-gray-50 transition"
+          onclick="prevGuideImage()">
+    ◀ 이전
+  </button>
 
-            <div class="text-sm text-gray-700 font-bold">
-              <span id="guideImageIndex">1</span> / <span id="guideImageTotal">3</span>
-            </div>
+  <div class="flex-1 text-center text-sm text-gray-700 font-bold whitespace-nowrap">
+    <span id="guideImageIndex">1</span> / <span id="guideImageTotal">3</span>
+  </div>
 
-            <button type="button"
-                    class="clickable focus-ring w-full sm:w-auto px-5 py-2.5 rounded-lg border font-bold hover:bg-gray-50 transition"
-                    onclick="nextGuideImage()">
-              다음 ▶
-            </button>
-          </div>
+  <button type="button"
+          class="clickable focus-ring shrink-0 whitespace-nowrap px-4 py-2 rounded-lg border font-bold hover:bg-gray-50 transition"
+          onclick="nextGuideImage()">
+    다음 ▶
+  </button>
+</div>
         </div>
       </div>
     </div>
