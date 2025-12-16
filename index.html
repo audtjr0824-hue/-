@@ -952,20 +952,21 @@
 
     let guideIndex = 0;
 
-    function openGuideImages(startIndex = 0) {
-      guideIndex = Math.max(0, Math.min(startIndex, GUIDE_IMAGES.length - 1));
-      renderGuideImage();
-      openModal('modal-guide-images', null);
+function openGuideImages(stepNo = 2) {
+  // stepNo: 2,3,4 를 받으면 0,1,2 로 변환
+  guideIndex = Math.max(0, Math.min(stepNo - 2, GUIDE_IMAGES.length - 1));
+  renderGuideImage();
+  openModal('modal-guide-images', null);
 
-      const modal = document.getElementById('modal-guide-images');
-      if (modal.__arrowHandler) modal.removeEventListener('keydown', modal.__arrowHandler);
+  const modal = document.getElementById('modal-guide-images');
+  if (modal.__arrowHandler) modal.removeEventListener('keydown', modal.__arrowHandler);
 
-      modal.__arrowHandler = function(e) {
-        if (e.key === 'ArrowLeft') prevGuideImage();
-        if (e.key === 'ArrowRight') nextGuideImage();
-      };
-      modal.addEventListener('keydown', modal.__arrowHandler);
-    }
+  modal.__arrowHandler = function(e) {
+    if (e.key === 'ArrowLeft') prevGuideImage();
+    if (e.key === 'ArrowRight') nextGuideImage();
+  };
+  modal.addEventListener('keydown', modal.__arrowHandler);
+}
 
     function renderGuideImage() {
       const img = document.getElementById('guideImage');
