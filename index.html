@@ -72,6 +72,14 @@
     }
     a, button, [role="button"] { -webkit-tap-highlight-color: transparent; }
 
+    /* ✅ 430px 이하에서만 강제 줄바꿈 제어용 */
+    br.br-430 { display: none; }
+    .sp-430 { display: inline; }
+    @media (max-width: 430px) {
+      br.br-430 { display: inline; }
+      .sp-430 { display: none; }
+    }
+
     /* HERO */
     .hero {
       background: linear-gradient(135deg, #1E40AF 0%, #2563EB 100%);
@@ -163,7 +171,7 @@
 
       <div class="inline-block bg-white/15 text-white px-6 py-3 rounded-2xl border border-white/25 backdrop-blur-sm mb-6">
         <div class="font-impact text-4xl md:text-5xl leading-tight">
-          경남대학교 재학생 필독
+          경남대학교<span class="sp-430" aria-hidden="true"> </span><br class="br-430" aria-hidden="true">재학생 필독
         </div>
       </div>
 
@@ -175,19 +183,22 @@
         [재학생 맞춤형 고용서비스]
       </h2>
 
-<div class="flex flex-col items-center gap-5">
-  <p class="text-lg md:text-xl font-gmarket text-blue-100 font-light">
-    망설이는 순간, 지원금은 사라집니다.
-  </p>
+      <div class="flex flex-col items-center gap-5">
+        <p class="text-lg md:text-xl font-gmarket text-blue-100 font-light">
+          망설이는 순간, 지원금은 사라집니다.
+        </p>
 
-  <a class="inline-flex px-6 py-3 rounded-full bg-white text-blue-700 font-bold shadow-md hover:bg-blue-50 transition">
-    학교 포털에서 상담 예약하기
-  </a>
-</div>
+        <!-- ✅ 상단 버튼: 하단 apply 섹션으로 이동 -->
+        <a href="#apply"
+           class="inline-flex px-6 py-3 rounded-full bg-white text-blue-700 font-bold shadow-md hover:bg-blue-50 transition clickable focus-ring"
+           aria-label="학교 포털에서 바로 예약하기 섹션으로 이동">
+          학교 포털에서 상담 예약하기
+        </a>
+      </div>
 
-
-    <div class="absolute top-0 left-0 w-64 h-64 bg-white opacity-5 rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
-    <div class="absolute bottom-0 right-0 w-96 h-96 bg-blue-400 opacity-10 rounded-full translate-x-1/3 translate-y-1/3 pointer-events-none"></div>
+      <div class="absolute top-0 left-0 w-64 h-64 bg-white opacity-5 rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+      <div class="absolute bottom-0 right-0 w-96 h-96 bg-blue-400 opacity-10 rounded-full translate-x-1/3 translate-y-1/3 pointer-events-none"></div>
+    </div>
   </header>
 
   <main class="max-w-6xl mx-auto px-4 -mt-12 md:-mt-16 pb-20 relative z-20">
@@ -205,7 +216,7 @@
             <div class="text-left">
               <h3 class="text-xl md:text-2xl font-bold text-white mb-1">상담 시간 절약 꿀팁!</h3>
               <p class="text-gray-300 text-sm md:text-base">
-                <strong class="text-yellow-300 border-b border-yellow-300">고용24 회원가입</strong> 미리 하고 오시면 상담이 훨씬 빨라집니다.
+                <strong class="text-yellow-300 border-b border-yellow-300">고용24 회원가입</strong> 미리 하고 오시면 상담이<span class="sp-430" aria-hidden="true"> </span><br class="br-430" aria-hidden="true">훨씬 빨라집니다.
               </p>
               <p class="text-xs text-gray-400 mt-1">※ 클릭 시 고용24가 새 창으로 열립니다.</p>
             </div>
@@ -224,7 +235,14 @@
 
     <!-- TRACKS -->
     <div id="tracks" class="text-center mb-10 scroll-mt-24">
-      <h2 class="font-impact text-3xl text-gray-800 mb-2">👇 내 학년에 맞는 혜택 확인하기</h2>
+<h2 class="font-impact text-3xl text-gray-800 mb-2">
+  <span class="inline-flex items-start justify-center gap-2">
+    <span class="shrink-0 w-[1.4em] text-center leading-none">👇</span>
+    <span class="text-left">
+      내 학년에 맞는<span class="sp-430" aria-hidden="true"> </span><br class="br-430" aria-hidden="true">혜택 확인하기
+    </span>
+  </span>
+</h2>
       <p class="text-gray-500 text-sm bg-white inline-block px-4 py-1 rounded-full shadow-sm border">
         카드를 클릭하면 상세 혜택(설명)이 열립니다.
       </p>
@@ -419,7 +437,7 @@
         </div>
       </div>
 
-      <!-- ✅ Accordion 2 (이제 1번 밖으로 정상 분리됨) -->
+      <!-- Accordion 2 -->
       <div class="border border-gray-200 rounded-2xl overflow-hidden">
         <button type="button"
                 class="w-full flex items-center justify-between px-4 md:px-5 py-3 md:py-4 bg-gray-50 hover:bg-gray-100 transition clickable focus-ring"
@@ -493,7 +511,9 @@
 
     <!-- HOW TO APPLY -->
     <section id="apply" class="bg-white rounded-3xl p-8 md:p-12 shadow-xl border border-gray-100 text-center scroll-mt-24">
-      <h2 class="font-impact text-3xl text-gray-900 mb-8">학교 포털에서 바로 예약하기</h2>
+      <h2 class="font-impact text-3xl text-gray-900 mb-8">
+        학교 포털에서 바로<span class="sp-430" aria-hidden="true"> </span><br class="br-430" aria-hidden="true">예약하기
+      </h2>
 
       <div class="flex flex-col md:flex-row justify-center gap-4 text-left max-w-5xl mx-auto">
         <a href="https://portal.kyungnam.ac.kr/main.do" target="_blank" rel="noopener noreferrer"
@@ -527,7 +547,7 @@
           <h4 class="font-bold text-lg mb-1">예약 확정</h4>
           <p class="text-sm text-gray-600">
             상담 분류에서<br>
-            <span class="bg-yellow-200 px-1 font-bold">‘재학생 맞춤형 고용서비스’ → 희망 일정 선택</span><br>
+            <span class="bg-yellow-200 px-1 font-bold">‘재학생 맞춤형 고용서비스’ →<span class="sp-430" aria-hidden="true"> </span><br class="br-430" aria-hidden="true">희망 일정 선택</span><br>
             일정 확인 후 예약!
           </p>
         </div>
@@ -724,9 +744,11 @@
             <ul class="list-disc pl-4 space-y-1 text-xs text-blue-900">
               <li><strong>교내:</strong> 학과 취업 특강, 대학일자리플러스센터 특강, 진로상담 등</li>
               <li><strong>교외:</strong> 대외활동, 인턴 (증빙 필수)</li>
-<li><strong>온라인:</strong> 사이버진로교육센터 등 (월 최대 10시간)<br>
-  <strong class="inline-block ml-10">단, 온라인 강의로만 계획 수립 불가.</strong>
-</li>
+              <!-- ✅ ml-10 제거: 데스크톱에서 과한 공백 방지, 430 이하에서만 줄바꿈 -->
+              <li>
+                <strong>온라인:</strong> 사이버진로교육센터 등 (월 최대 10시간)<span class="sp-430" aria-hidden="true"> </span><br class="br-430" aria-hidden="true">
+                <strong>단, 온라인 강의로만 계획 수립 불가.</strong>
+              </li>
             </ul>
           </div>
 
@@ -954,21 +976,21 @@
 
     let guideIndex = 0;
 
-function openGuideImages(stepNo = 2) {
-  // stepNo: 2,3,4 를 받으면 0,1,2 로 변환
-  guideIndex = Math.max(0, Math.min(stepNo - 2, GUIDE_IMAGES.length - 1));
-  renderGuideImage();
-  openModal('modal-guide-images', null);
+    function openGuideImages(stepNo = 2) {
+      // stepNo: 2,3,4 를 받으면 0,1,2 로 변환
+      guideIndex = Math.max(0, Math.min(stepNo - 2, GUIDE_IMAGES.length - 1));
+      renderGuideImage();
+      openModal('modal-guide-images', null);
 
-  const modal = document.getElementById('modal-guide-images');
-  if (modal.__arrowHandler) modal.removeEventListener('keydown', modal.__arrowHandler);
+      const modal = document.getElementById('modal-guide-images');
+      if (modal.__arrowHandler) modal.removeEventListener('keydown', modal.__arrowHandler);
 
-  modal.__arrowHandler = function(e) {
-    if (e.key === 'ArrowLeft') prevGuideImage();
-    if (e.key === 'ArrowRight') nextGuideImage();
-  };
-  modal.addEventListener('keydown', modal.__arrowHandler);
-}
+      modal.__arrowHandler = function(e) {
+        if (e.key === 'ArrowLeft') prevGuideImage();
+        if (e.key === 'ArrowRight') nextGuideImage();
+      };
+      modal.addEventListener('keydown', modal.__arrowHandler);
+    }
 
     function renderGuideImage() {
       const img = document.getElementById('guideImage');
